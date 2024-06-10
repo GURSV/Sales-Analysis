@@ -1,0 +1,5057 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Sales Dashboard</title>
+    <style type="text/css">
+      body {
+        background: #e7edfd !important;
+        color: #2158ed;
+      }
+      .ZDBDSElemTitleDesc .ZDBDSElemTitle {
+        color: #000000 !important;
+        font-family: Lato !important;
+        font-size: 15 !important;
+        font-style: normal !important;
+        font-weight: bold !important;
+      }
+      .ZDBDSElemTitleDesc .ZDBDSElemDesc {
+        color: #000000 !important;
+        font-family: Default !important;
+        font-size: 15 !important;
+      }
+      .ZDBDSElemTitleDesc {
+        border-bottom-width: px !important;
+        border-bottom-color: #dcdee2 !important;
+      }
+      .ZDBDSElemPar {
+        border-width: px !important;
+        border-color: #dcdee2 !important;
+        border-radius: 5px !important;
+      }
+      .ZDBDWidgetRadius {
+        border-radius: 5px !important;
+      }
+      .ZDBDSElemPar,
+      .ZDBDSElem {
+        background-color: #ffffff !important;
+      }
+    </style>
+    <style>
+      .dataCell,
+      .filterCell,
+      .groupCell,
+      .sectionHeader,
+      .groupSummary,
+      .sectionHeaderLast,
+      .groupSumPrevRowExists,
+      .groupColStartCell,
+      .groupCellEnd {
+        border-right: 1px solid #e1e1e1;
+        white-space: normal !important;
+        word-wrap: break-word;
+      }
+
+      .dataCell,
+      .sectionHeader,
+      .sectionHeaderLast,
+      .groupCellEnd {
+        border-bottom: 1px solid #e1e1e1;
+      }
+
+      .sectionHeader,
+      .sectionHeaderLast {
+        background-color: #f3f3f3;
+        border-right-width: 0px;
+        font-weight: bold;
+      }
+
+      .sectionHeaderLast {
+        border-right: 1px solid #e1e1e1;
+      }
+
+      .blankCell {
+        background-color: #ffebc8;
+        border-color: #ffebc8;
+      }
+
+      .groupCell {
+        background-color: #f3f3f3;
+        font-weight: bold;
+      }
+
+      .groupCellEnd {
+        font-weight: bold;
+        background-color: #f3f3f3;
+        border-top: #f3f3f3;
+      }
+
+      .groupColStartCell {
+        background-color: #f3f3f3;
+        border-bottom: 1px solid #dddddd;
+      }
+
+      .groupSummary {
+        font-weight: bold;
+        background-color: #f3f3f3;
+        border-bottom: 1px solid #dddddd;
+      }
+
+      .groupSumPrevRowExists {
+        font-weight: bold;
+        background-color: #f3f3f3;
+        border-bottom: 1px solid #dddddd;
+      }
+
+      .chRow,
+      .tcRow {
+        height: 22px;
+      }
+
+      .PivotSheet {
+        font-family: Arial, Verdana, sans-serif;
+      }
+
+      .PivotSheet .hRow,
+      .PivotSheet .colHeadL,
+      .PivotSheet .colHeadR,
+      .PivotSheet .dL,
+      .PivotSheet .dR,
+      .PivotSheet .sL,
+      .PivotSheet .sR,
+      .PivotSheet .tL,
+      .PivotSheet .tR,
+      .PivotSheet .zdbRowHead,
+      .PivotSheet .zdbRhColHead {
+        white-space: normal;
+        overflow: hidden;
+      }
+
+      .PivotSheet .hRow,
+      .PivotSheet .zdbRowHead,
+      .PivotSheet .zdbRhColHead,
+      .PivotSheet .colHeadL,
+      .PivotSheet .colHeadR {
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .PivotSheet .zdbRowHead,
+      .PivotSheet .zdbRhColHead {
+        color: #c0c0c0;
+        border-left: 1px solid;
+        border-top: 0px;
+        border-bottom: 0px;
+      }
+
+      .PivotSheet .zdbRhColHead {
+        border-top: 1px solid;
+      }
+
+      .PivotSheet .hRow,
+      .PivotSheet .colHeadL,
+      .PivotSheet .sL,
+      .PivotSheet .colHeadR,
+      .PivotSheet .sR,
+      .PivotSheet .tR,
+      .PivotSheet .tL {
+        font-weight: bold;
+      }
+
+      .PivotSheet .sL,
+      .PivotSheet .sR,
+      .PivotSheet .bottomLine {
+        border-bottom: 1px dotted #cccccc;
+      }
+
+      .PivotSheet .hRow,
+      .PivotSheet .zdbDataCell,
+      .PivotSheet .colHeadL,
+      .PivotSheet .colHeadR,
+      .PivotSheet .dL,
+      .PivotSheet .dR,
+      .PivotSheet .sL,
+      .PivotSheet .sR,
+      .PivotSheet .padRight {
+        border-right: 1px solid #cccccc;
+      }
+
+      .PivotSheet .zdbRowHead,
+      .PivotSheet .zdbRhColHead {
+        border-right: 1px dotted #cccccc;
+      }
+
+      .PivotSheet .colHeadL,
+      .PivotSheet .colHeadR {
+        border-bottom: 1px solid #cccccc;
+      }
+
+      .PivotSheet .hRow,
+      .PivotSheet .colHeadL,
+      .PivotSheet .colHeadR {
+        border-top: 1px solid #cccccc;
+      }
+
+      .PivotSheet .hRow,
+      .PivotSheet .colHeadL,
+      .PivotSheet .sL {
+        background-color: #e2e2e2;
+      }
+
+      .PivotSheet .colHeadR,
+      .PivotSheet .sR {
+        background-color: #e9e9e9;
+      }
+
+      .PivotSheet .dL,
+      .PivotSheet .zdbRowHead,
+      .PivotSheet .zdbRhColHead {
+        background-color: #f5f5f5;
+      }
+
+      .PivotSheet .groupCell,
+      .PivotSheet .groupCellEnd {
+        background-color: #f5f5f5;
+        border-left: 0px;
+        border-right: 1px solid #ccc;
+        font-weight: bold;
+      }
+
+      .PivotSheet .groupCell {
+        border-bottom: 0px;
+        border-top: 0px;
+      }
+
+      .PivotSheet .groupCellEnd {
+        border-bottom: 1px solid #ccc;
+        border-top: 0px;
+        white-space: normal;
+      }
+
+      .PivotSheet .zdbDataCell {
+        border-top: 0px;
+        border-left: 0px;
+      }
+
+      .PivotSheet .zdbColHead {
+        background-color: #e2e2e2;
+        border-left: 0px;
+        border-color: #ccc;
+        font-weight: bold;
+      }
+
+      .verticalLineRemoved .hRow,
+      .verticalLineRemoved .zdbDataCell,
+      .verticalLineRemoved .colHeadL,
+      .verticalLineRemoved .colHeadR,
+      .verticalLineRemoved .dL,
+      .verticalLineRemoved .dR,
+      .verticalLineRemoved .sL,
+      .verticalLineRemoved .sR,
+      .verticalLineRemoved .padRight,
+      .verticalLineRemoved .groupCell,
+      .verticalLineRemoved .groupCellEnd,
+      .verticalLineRemoved .dataCell,
+      .verticalLineRemoved .apitableheader {
+        border-right: 0px !important;
+      }
+      .verticalLineRemoved:not(.t1) {
+        border-right-width: 1px;
+        border-right-style: solid;
+      }
+
+      .apitablebg {
+        background-color: #f6f6f6;
+      }
+
+      .apitableheader {
+        background-color: #e5e5e5;
+        text-align: center;
+        border: 1px solid #cccccc;
+        border-left: 0px;
+        overflow: hidden;
+      }
+
+      img {
+        border: 0px;
+      }
+
+      .apititle {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: bold;
+      }
+
+      .apiUfLblName {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: bold;
+      }
+
+      .apiUFValue {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 13px;
+        font-style: normal;
+        color: Gray;
+        font-weight: bold;
+      }
+
+      .apiNEWUfLblName {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 13px;
+        font-style: normal;
+        color: #808080;
+      }
+
+      .apiNEWUFValue {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 13px;
+        font-style: normal;
+        color: #000;
+      }
+
+      .apiRAFCombinedCriteria {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 13px;
+        font-style: normal;
+        color: #000;
+        font-weight: bold;
+      }
+
+      .apiRAFAND {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 13px;
+        font-style: italic;
+        color: #000;
+      }
+
+      .apidesc {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 17px;
+        font-style: normal;
+      }
+
+      .ZDBDSElemTitle {
+        font-family: Arial, Verdana, sans-serif;
+        color: #000;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .ZDBDSElemDesc {
+        font-family: Arial, Verdana, sans-serif;
+        color: #808081;
+        font-size: 12px;
+        font-weight: normal;
+        padding-top: 5px;
+      }
+
+      .ZDBDSElemDiv {
+        border: 1px solid #fccfcf;
+      }
+
+      .ZDBDSViewDeleted {
+        background-color: white;
+        color: blue;
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      .mainTable {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 12px;
+        font-weight: normal;
+        font-style: normal;
+        color: #000000;
+        background-color: #ffffff;
+      }
+
+      .PivotSheet,
+      .tabularSheet,
+      .sheet,
+      .apitablebg {
+        border-bottom: 1px solid #aaaaaa;
+        border-left: 1px solid #cccccc;
+      }
+
+      .scrollTopArrow {
+        border-right: 1px solid #333;
+        border-top: 1px solid #333;
+        content: "";
+        display: inline-block;
+        height: 13px;
+        margin-left: 11px;
+        margin-top: 15px;
+        transform: rotate(-45deg);
+        width: 13px;
+      }
+
+      .scrollTop {
+        background: #ffffff none repeat scroll 0 0;
+        border: 1px solid #333;
+        border-radius: 50%;
+        display: inline-block;
+        height: 35px;
+        margin-right: 0;
+        width: 35px;
+      }
+
+      #scrollTop {
+        cursor: pointer;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+
+      .opr1OPERATION {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 40px;
+        color: #000000;
+        padding-bottom: 3px;
+        line-height: normal !important;
+      }
+
+      .opr1LABEL {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 15px;
+        color: #000000;
+        text-align: left;
+        padding-bottom: 10px;
+        font-weight: bold;
+        line-height: normal !important;
+      }
+
+      .opr2LABEL,
+      .opr3LABEL {
+        font-family: Arial, Verdana, sans-serif;
+        font-size: 13px;
+        color: #000000;
+        text-align: right;
+        padding-bottom: 5px;
+        clear: both;
+        line-height: normal !important;
+      }
+
+      .kpiNEGATIVE {
+        display: table-cell;
+        vertical-align: middle;
+        font-family: Lato, "Proxima Nova", Arial;
+        font-size: 30px;
+        padding-bottom: 4px;
+        color: #eb3c3b;
+      }
+
+      .kpiPOSITIVE {
+        display: table-cell;
+        vertical-align: middle;
+        font-family: Lato, "Proxima Nova", Arial;
+        font-size: 30px;
+        padding-bottom: 4px;
+        color: #00ad5d;
+      }
+
+      .widgetnodata {
+        color: #eb3c3b;
+        font-family: Arial, Verdana, sans-serif;
+        font-size: medium;
+        font-weight: bold;
+        padding: 10px;
+      }
+
+      .kpiholder {
+        display: inline-table;
+        border-spacing: 0;
+      }
+
+      .widgetholder {
+        display: inline-block;
+        border-spacing: 0;
+        -webkit-transform-origin: 0 0 0;
+      }
+
+      .widgetholder.widgetChart {
+        display: block !important;
+      }
+
+      .ZDBDThemeType1 {
+        background: #fff;
+      }
+
+      .ZDBDThemeType2,
+      .ZDBDThemeType3,
+      .ZDBDThemeType4,
+      .ZDBDThemeType5,
+      .ZDBDThemeType6 {
+        background: #f2f2f2;
+      }
+
+      .ZDBDSElemPar {
+        box-sizing: border-box;
+        background-color: #fff;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .HTML .ZDBDSElemPar[viewtype="WIDGET"] {
+        margin-bottom: 10px;
+      }
+
+      .PDF .ZDBDSElemPar[viewtype="WIDGET"] {
+        margin-bottom: 1%;
+        vertical-align: top;
+      }
+
+      .ZDBDThemeType1 .ZDBDSElemTitleDesc,
+      .ZDBDThemeType2 .ZDBDSElemTitleDesc {
+        border-top: none !important;
+        border-right: none !important;
+        border-left: none !important;
+        border-bottom-width: 1px;
+        border-style: solid;
+        border-color: #d9d9d9;
+      }
+
+      .ZDBDThemeType2 .ZDBDSElemPar {
+        border: 1px solid #d9d9d9;
+      }
+
+      .ZDBDThemeType4 .ZDBDSElemPar {
+        border: 1px solid #959394;
+      }
+
+      .ZDBDThemeType3 .ZDBDSElemPar,
+      .ZDBDThemeType5 .ZDBDSElemPar {
+        border-top-width: 2px;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-color: #959394;
+        border-style: solid;
+      }
+
+      .ZDBDThemeType4 .ZDBDSElemTitleDesc,
+      .ZDBDThemeType6 .ZDBDSElemTitleDesc {
+        background-color: #959394;
+      }
+
+      .ZDBDSElemTitleDesc {
+        display: table;
+        width: 100%;
+        border-spacing: 10px;
+      }
+
+      .ZDBDSElemTitleDesc > div {
+        display: table-cell;
+        vertical-align: middle;
+        height: 30px;
+      }
+
+      .ZDBDSElem {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      .borderNdShadowDisabled {
+        border: none !important;
+        box-shadow: none !important;
+        height: 100%;
+      }
+
+      .ZDBDSElemPar[viewtype="spacer"] {
+        border: none !important;
+        box-shadow: none !important;
+      }
+
+      .ZDBDThemeType5.MCType1 [thememulticolortype="0"] {
+        border-color: #00caae;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="0"] .ZDBDSElemTitleDesc {
+        background: #00caae;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="0"][viewtype="WIDGET"] {
+        border: 1px solid #00caae;
+      }
+
+      .ZDBDThemeType5.MCType1 [thememulticolortype="1"] {
+        border-color: #288ae1;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="1"] .ZDBDSElemTitleDesc {
+        background: #288ae1;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="1"][viewtype="WIDGET"] {
+        border: 1px solid #288ae1;
+      }
+
+      .ZDBDThemeType5.MCType1 [thememulticolortype="2"] {
+        border-color: #e84d6d;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="2"] .ZDBDSElemTitleDesc {
+        background: #e84d6d;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="2"][viewtype="WIDGET"] {
+        border: 1px solid #e84d6d;
+      }
+
+      .ZDBDThemeType5.MCType1 [thememulticolortype="3"] {
+        border-color: #f9882c;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="3"] .ZDBDSElemTitleDesc {
+        background: #f9882c;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="3"][viewtype="WIDGET"] {
+        border: 1px solid #f9882c;
+      }
+
+      .ZDBDThemeType5.MCType1 [thememulticolortype="4"] {
+        border-color: #febb1f;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="4"] .ZDBDSElemTitleDesc {
+        background: #febb1f;
+      }
+
+      .ZDBDThemeType6.MCType1 [thememulticolortype="4"][viewtype="WIDGET"] {
+        border: 1px solid #febb1f;
+      }
+
+      .ZDBDThemeType5.MCType2 [thememulticolortype="0"] {
+        border-color: #ec6369;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="0"] .ZDBDSElemTitleDesc {
+        background: #ec6369;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="0"][viewtype="WIDGET"] {
+        border: 1px solid #ec6369;
+      }
+
+      .ZDBDThemeType5.MCType2 [thememulticolortype="1"] {
+        border-color: #f2c94a;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="1"] .ZDBDSElemTitleDesc {
+        background: #f2c94a;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="1"][viewtype="WIDGET"] {
+        border: 1px solid #f2c94a;
+      }
+
+      .ZDBDThemeType5.MCType2 [thememulticolortype="2"] {
+        border-color: #66dc9c;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="2"] .ZDBDSElemTitleDesc {
+        background: #66dc9c;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="2"][viewtype="WIDGET"] {
+        border: 1px solid #66dc9c;
+      }
+
+      .ZDBDThemeType5.MCType2 [thememulticolortype="3"] {
+        border-color: #50acee;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="3"] .ZDBDSElemTitleDesc {
+        background: #50acee;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="3"][viewtype="WIDGET"] {
+        border: 1px solid #50acee;
+      }
+
+      .ZDBDThemeType5.MCType2 [thememulticolortype="4"] {
+        border-color: #6a6fe8;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="4"] .ZDBDSElemTitleDesc {
+        background: #6a6fe8;
+      }
+
+      .ZDBDThemeType6.MCType2 [thememulticolortype="4"][viewtype="WIDGET"] {
+        border: 1px solid #6a6fe8;
+      }
+
+      .ZDBDThemeType5.MCType3 [thememulticolortype="0"] {
+        border-color: #38d1c0;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="0"] .ZDBDSElemTitleDesc {
+        background: #38d1c0;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="0"][viewtype="WIDGET"] {
+        border: 1px solid #38d1c0;
+      }
+
+      .ZDBDThemeType5.MCType3 [thememulticolortype="1"] {
+        border-color: #5866c2;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="1"] .ZDBDSElemTitleDesc {
+        background: #5866c2;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="1"][viewtype="WIDGET"] {
+        border: 1px solid #5866c2;
+      }
+
+      .ZDBDThemeType5.MCType3 [thememulticolortype="2"] {
+        border-color: #fdaa29;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="2"] .ZDBDSElemTitleDesc {
+        background: #fdaa29;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="2"][viewtype="WIDGET"] {
+        border: 1px solid #fdaa29;
+      }
+
+      .ZDBDThemeType5.MCType3 [thememulticolortype="3"] {
+        border-color: #9860d0;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="3"] .ZDBDSElemTitleDesc {
+        background: #9860d0;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="3"][viewtype="WIDGET"] {
+        border: 1px solid #9860d0;
+      }
+
+      .ZDBDThemeType5.MCType3 [thememulticolortype="4"] {
+        border-color: #ef4f85;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="4"] .ZDBDSElemTitleDesc {
+        background: #ef4f85;
+      }
+
+      .ZDBDThemeType6.MCType3 [thememulticolortype="4"][viewtype="WIDGET"] {
+        border: 1px solid #ef4f85;
+      }
+
+      .ZDBDThemeType5.MCType4 [thememulticolortype="0"] {
+        border-color: #e84d6d;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="0"] .ZDBDSElemTitleDesc {
+        background: #e84d6d;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="0"][viewtype="WIDGET"] {
+        border: 1px solid #e84d6d;
+      }
+
+      .ZDBDThemeType5.MCType4 [thememulticolortype="1"] {
+        border-color: #00caae;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="1"] .ZDBDSElemTitleDesc {
+        background: #00caae;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="1"][viewtype="WIDGET"] {
+        border: 1px solid #00caae;
+      }
+
+      .ZDBDThemeType5.MCType4 [thememulticolortype="2"] {
+        border-color: #4a86f2;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="2"] .ZDBDSElemTitleDesc {
+        background: #4a86f2;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="2"][viewtype="WIDGET"] {
+        border: 1px solid #4a86f2;
+      }
+
+      .ZDBDThemeType5.MCType4 [thememulticolortype="3"] {
+        border-color: #fbba3c;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="3"] .ZDBDSElemTitleDesc {
+        background: #fbba3c;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="3"][viewtype="WIDGET"] {
+        border: 1px solid #fbba3c;
+      }
+
+      .ZDBDThemeType5.MCType4 [thememulticolortype="4"] {
+        border-color: #f9539c;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="4"] .ZDBDSElemTitleDesc {
+        background: #f9539c;
+      }
+
+      .ZDBDThemeType6.MCType4 [thememulticolortype="4"][viewtype="WIDGET"] {
+        border: 1px solid #f9539c;
+      }
+
+      .ZDBDThemeType5.MCType5 [thememulticolortype="0"] {
+        border-color: #ec656b;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="0"] .ZDBDSElemTitleDesc {
+        background: #ec656b;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="0"][viewtype="WIDGET"] {
+        border: 1px solid #ec656b;
+      }
+
+      .ZDBDThemeType5.MCType5 [thememulticolortype="1"] {
+        border-color: #ff9361;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="1"] .ZDBDSElemTitleDesc {
+        background: #ff9361;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="1"][viewtype="WIDGET"] {
+        border: 1px solid #ff9361;
+      }
+
+      .ZDBDThemeType5.MCType5 [thememulticolortype="2"] {
+        border-color: #d1e76e;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="2"] .ZDBDSElemTitleDesc {
+        background: #d1e76e;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="2"][viewtype="WIDGET"] {
+        border: 1px solid #d1e76e;
+      }
+
+      .ZDBDThemeType5.MCType5 [thememulticolortype="3"] {
+        border-color: #6cd09b;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="3"] .ZDBDSElemTitleDesc {
+        background: #6cd09b;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="3"][viewtype="WIDGET"] {
+        border: 1px solid #6cd09b;
+      }
+
+      .ZDBDThemeType5.MCType5 [thememulticolortype="4"] {
+        border-color: #5ca9e0;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="4"] .ZDBDSElemTitleDesc {
+        background: #5ca9e0;
+      }
+
+      .ZDBDThemeType6.MCType5 [thememulticolortype="4"][viewtype="WIDGET"] {
+        border: 1px solid #5ca9e0;
+      }
+
+      .ZDBDThemeType5.MCType6 [thememulticolortype="0"] {
+        border-color: #fe6769;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="0"] .ZDBDSElemTitleDesc {
+        background: #fe6769;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="0"][viewtype="WIDGET"] {
+        border: 1px solid #fe6769;
+      }
+
+      .ZDBDThemeType5.MCType6 [thememulticolortype="1"] {
+        border-color: #bae490;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="1"] .ZDBDSElemTitleDesc {
+        background: #bae490;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="1"][viewtype="WIDGET"] {
+        border: 1px solid #bae490;
+      }
+
+      .ZDBDThemeType5.MCType6 [thememulticolortype="2"] {
+        border-color: #56a8fb;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="2"] .ZDBDSElemTitleDesc {
+        background: #56a8fb;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="2"][viewtype="WIDGET"] {
+        border: 1px solid #56a8fb;
+      }
+
+      .ZDBDThemeType5.MCType6 [thememulticolortype="3"] {
+        border-color: #fdcc58;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="3"] .ZDBDSElemTitleDesc {
+        background: #fdcc58;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="3"][viewtype="WIDGET"] {
+        border: 1px solid #fdcc58;
+      }
+
+      .ZDBDThemeType5.MCType6 [thememulticolortype="4"] {
+        border-color: #f5669d;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="4"] .ZDBDSElemTitleDesc {
+        background: #f5669d;
+      }
+
+      .ZDBDThemeType6.MCType6 [thememulticolortype="4"][viewtype="WIDGET"] {
+        border: 1px solid #f5669d;
+      }
+
+      body {
+        margin: 0px;
+      }
+
+      .t1 .mainTable,
+      .t2 .mainTable,
+      .t3 .mainTable {
+        background-color: transparent;
+      }
+
+      .t1 .hRow,
+      .t1 .zdbDataCell,
+      .t1 .colHeadR,
+      .t1 .dR,
+      .t1 .sR,
+      .t1 .padRight,
+      .t1 .groupCell,
+      .t1 .groupCellEnd,
+      .t1 .groupColStartCell,
+      .t1 .groupSumPrevRowExists,
+      .t1 .groupSummary,
+      .t1 .sectionHeader,
+      .t1 .sectionHeaderLast {
+        border-right: 0px;
+        border-left: 0px;
+        background-color: transparent;
+      }
+
+      .t1 {
+        border-width: 0px;
+      }
+
+      .t1 .datacell,
+      .t1 .apitableheader {
+        border-width: 0px;
+      }
+
+      .t1 .datacell {
+        border-bottom-width: 1px;
+      }
+
+      .t1 .notBottomLine {
+        border-right: 0px;
+      }
+
+      .t1 .groupRightEnd {
+        border-right: 1px solid;
+      }
+
+      .t1 .colHeadL,
+      .t1 .colHeadR,
+      .t1 .hRow,
+      .t1 .apitableheader,
+      .t1 .dataBottomLine {
+        border-top-width: 0px;
+        border-top-color: #fff;
+        border-bottom-width: 1px;
+      }
+
+      .t1 .hRow {
+        border-right: 1px solid;
+        border-bottom: 1px solid;
+      }
+
+      .t1 .groupCell,
+      .t1 .groupColStartCell,
+      .t1 .groupCellEnd {
+        border-right: 1px solid;
+      }
+
+      .t1 .groupCell,
+      .t1 .groupCellEnd,
+      .t1 .apitableheader,
+      .t1 .colHeadL,
+      .t1 .colHeadR,
+      .t1 .dL,
+      .t1 .sL,
+      .t1 .sR,
+      .t1 .groupSummary,
+      .t1 .groupSumPrevRowExists,
+      .t1 .groupColStartCell,
+      .t1 .hRow,
+      .t2 .groupCell,
+      .t2 .groupCellEnd,
+      .t2 .apitableheader,
+      .t2 .colHeadL,
+      .t2 .colHeadR,
+      .t2 .dL,
+      .t2 .sL,
+      .t2 .sR,
+      .t2 .groupSummary,
+      .t2 .groupSumPrevRowExists,
+      .t2 .groupColStartCell,
+      .t2 .hRow,
+      .t2 .sectionHeader,
+      .t2 .sectionHeaderLast,
+      .t3 .dL,
+      .t3 .groupCell,
+      .t3 .groupCellEnd {
+        background-color: transparent;
+      }
+
+      .t3 {
+        border-right: 1px solid;
+      }
+
+      .t3 .dR,
+      .t3 .colHeadR,
+      .t3 .sR,
+      .t3 .padRight,
+      .t3 .dataCell,
+      .t3 .groupSummary,
+      .t3 .sectionHeaderLast,
+      .t3 .groupSumPrevRowExists {
+        border-right: 0px;
+      }
+
+      .t3 .groupRightEnd,
+      .t3 .dataCellEnd {
+        border-right-width: 1px;
+      }
+
+      .t3 .notBottomLine {
+        border-bottom-width: 0px;
+      }
+
+      .t3 .dataBottomLine {
+        border-bottom-width: 1px;
+      }
+
+      .zd-wrapper {
+        position: relative;
+        min-height: 100%;
+        border-style: solid;
+        border-color: transparent;
+      }
+
+      .zd-scrollElement {
+        min-height: 100%;
+        position: absolute;
+        width: 100%;
+      }
+
+      .zd-layerHolder {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+      }
+
+      .zd-layer {
+        position: absolute;
+
+        border: 5px solid transparent;
+
+        box-sizing: border-box;
+      }
+
+      .zd-layer.zd-autoHeight {
+        border-width: 5px;
+      }
+
+      .zd-container {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+
+        box-sizing: border-box;
+      }
+
+      .zd-container.zd-autoHeight {
+        height: auto;
+      }
+
+      .zd-layerHolder.zd-containerResize > .zd-layer {
+        transition: none;
+      }
+
+      .zd-move {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        border: 0px solid cornflowerblue;
+        box-sizing: border-box;
+        cursor: move;
+        transition: border-width 0.3s;
+        z-index: 2;
+      }
+
+      .zd-move:hover,
+      .zd-move:active {
+      }
+
+      .zd-preview {
+        opacity: 0.2 !important;
+        transition: none !important;
+        z-index: 1;
+      }
+
+      .zd-preview .zd-container {
+        background-color: #555;
+      }
+
+      .zd-preview.zd-no-transition {
+        transition: none;
+      }
+
+      .zd-resize {
+        position: absolute;
+        height: 15px;
+        width: 15px;
+
+        z-index: 2;
+        transition: background-color 0.3s;
+        z-index: 3;
+      }
+
+      .zd-resize:hover {
+        z-index: 4;
+      }
+
+      .zd-resize:hover,
+      .zd-resize:active {
+      }
+
+      .zd-resize-Left,
+      .zd-resize-Right {
+        width: 10px;
+        height: 100%;
+
+        cursor: ew-resize;
+        background: transparent;
+        opacity: 0.2;
+      }
+
+      .zd-resize-Right,
+      .zd-resize-BottomRight,
+      .zd-resize-TopRight {
+        right: 0px;
+      }
+
+      .zd-resize-BottomRight {
+        border-top-left-radius: 200px;
+      }
+
+      .zd-resize-BottomLeft {
+        border-top-right-radius: 200px;
+      }
+
+      .zd-resize-TopRight {
+        border-bottom-left-radius: 200px;
+      }
+
+      .zd-resize-TopLeft {
+        border-bottom-right-radius: 200px;
+      }
+
+      .zd-resize-Bottom,
+      .zd-resize-BottomLeft,
+      .zd-resize-BottomRight {
+        bottom: 0px;
+      }
+
+      .zd-resize-Top,
+      .zd-resize-TopLeft,
+      .zd-resize-TopRight {
+        top: 0px;
+      }
+
+      .zd-resize-Bottom,
+      .zd-resize-Top {
+        width: 100%;
+        height: 10px;
+        cursor: ns-resize;
+        background: transparent;
+        opacity: 0.2;
+      }
+
+      .zd-resize-BottomLeft,
+      .zd-resize-BottomRight,
+      .zd-resize-TopLeft,
+      .zd-resize-TopRight {
+        z-index: 5;
+      }
+
+      .zd-resize-BottomLeft,
+      .zd-resize-TopRight {
+        cursor: nesw-resize;
+      }
+
+      .zd-resize-BottomLeft:hover,
+      .zd-resize-BottomLeft:active,
+      .zd-resize-BottomRight:hover,
+      .zd-resize-BottomRight:active {
+        background: transparent;
+      }
+
+      .zd-resize-BottomRight:hover ~ .zd-resize-Right,
+      .zd-resize-BottomRight:hover ~ .zd-resize-Bottom,
+      .zd-resize-BottomRight:active ~ .zd-resize-Right,
+      .zd-resize-BottomRight:active ~ .zd-resize-Bottom,
+      .zd-resize-BottomLeft:hover ~ .zd-resize-Left,
+      .zd-resize-BottomLeft:hover ~ .zd-resize-Bottom,
+      .zd-resize-BottomLeft:active ~ .zd-resize-Left,
+      .zd-resize-BottomLeft:active ~ .zd-resize-Bottom {
+      }
+
+      .zd-resize-TopRight:hover ~ .zd-resize-Right,
+      .zd-resize-TopRight:hover ~ .zd-resize-Top,
+      .zd-resize-TopRight:active ~ .zd-resize-Right,
+      .zd-resize-TopRight:active ~ .zd-resize-Top,
+      .zd-resize-TopLeft:hover ~ .zd-resize-Left,
+      .zd-resize-TopLeft:hover ~ .zd-resize-Top,
+      .zd-resize-TopLeft:active ~ .zd-resize-Left,
+      .zd-resize-TopLeft:active ~ .zd-resize-Top {
+      }
+
+      .zd-resize-BottomRight,
+      .zd-resize-TopLeft {
+        cursor: nwse-resize;
+      }
+
+      .zd-move:hover ~ .zd-resize {
+      }
+
+      .zd-resize:hover {
+      }
+
+      .zd-layerHolder.zd-action > .zd-layer {
+        opacity: 0.9;
+
+        transition: transform 0.18s;
+      }
+
+      .zd-action-target {
+      }
+
+      .zd-layerHolder.zd-action > .zd-layer.zd-action-target {
+        opacity: 1;
+        z-index: 2;
+
+        transition: none;
+      }
+
+      .zd-markerLines {
+        position: absolute;
+
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        min-height: 100%;
+      }
+
+      .zd-topLine,
+      .zd-bottomLine {
+        width: 100%;
+        height: 0px;
+
+        border-bottom: 1px solid teal;
+
+        overflow: hidden;
+        position: absolute;
+        transform: translateY(-11px);
+        transition: transform 0.18s;
+      }
+
+      .zd-leftLine,
+      .zd-rightLine {
+        height: 100%;
+        width: 0px;
+
+        border-left: 1px solid teal;
+
+        overflow: hidden;
+        position: absolute;
+        transform: translateX(-11px);
+        transition: transform 0.18s;
+      }
+
+      .zd-leftLine {
+        margin-left: 5px;
+      }
+
+      .zd-rightLine {
+        margin-left: -5px;
+      }
+
+      .zd-topLine {
+        margin-top: 5px;
+      }
+
+      .zd-bottomLine {
+        margin-top: -5px;
+      }
+
+      .zd-viewMode .zd-move,
+      .zd-viewMode .zd-resize {
+        display: none;
+      }
+
+      .zd-dashChild {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        position: relative;
+        background-color: white;
+      }
+
+      .a4Div .zd-dashChild,
+      .a4Div .zd-parDiv,
+      .a4Div .dashChildContent {
+        height: auto !important;
+      }
+
+      .zd-parDiv {
+        height: calc(100% - 45px);
+        width: 100%;
+        position: relative;
+      }
+
+      .zd-delete {
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+        border-radius: 1px;
+        box-shadow: 0px 0px 2px 1px #80b9fd;
+        background-position: -83px -49px;
+        background-color: white;
+      }
+
+      .zd-delete:hover {
+        background-position: -48px -588px;
+        box-shadow: 0px 0px 3px 1px #2386fc;
+      }
+
+      .zd-ZRdashboard {
+        width: 100%;
+        height: calc(100% - 5px);
+        margin-top: 5px;
+        position: relative;
+        overflow-y: scroll;
+      }
+
+      .zd-editMode .zd-layer:hover .zd-delete {
+        display: block;
+      }
+
+      .ZR-DashboardUFContainer {
+        width: 100%;
+        background: transparent;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      .za-create-instructions {
+        position: absolute;
+        top: 25%;
+        left: 25%;
+      }
+
+      .zd-viewMode .ZR-DashboardUFContainer {
+        height: auto;
+        border-width: 0px;
+      }
+
+      .zd-viewMode .zr-ufLayer {
+        border-width: 0px;
+      }
+
+      .ZR-DashboardUFContainer:after {
+        width: 200px;
+        height: 40px;
+        content: "+ Add User Filter ";
+        position: absolute;
+        left: calc(50% - 100px);
+        top: calc(50% - 20px);
+        background: white;
+        text-align: center;
+        padding: 10px;
+        box-sizing: border-box;
+
+        color: #848484;
+        box-shadow: 4px 4px 10px 2px #898989;
+        display: none;
+      }
+
+      .zd-move.zd-mvUF {
+        height: 33px;
+        width: calc(100% - 280px);
+      }
+
+      .ZR-ModalDiv {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: #000;
+      }
+
+      .widgetChild {
+      }
+
+      .zr-textChild {
+        height: auto;
+
+        border: 5px solid transparent;
+      }
+
+      .zr-ufLayer {
+        border: 0px solid transparent;
+      }
+
+      .zr-ufLayer + .zd-move {
+        top: 5px;
+        left: 5px;
+        height: 34px;
+        width: calc(100% - 280px);
+        background: #333;
+        opacity: 0.2;
+      }
+
+      .zd-markerLines {
+        display: none;
+      }
+
+      .zr-widgetChild .dashChildPar {
+        position: relative;
+        height: 100% !important;
+      }
+
+      .zd-move:hover ~ .zd-resize {
+      }
+
+      .zd-ui-border {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        border: 1px dotted #92cefd;
+        z-index: 1;
+        box-sizing: border-box;
+      }
+
+      .zd-ui-sides {
+        position: absolute;
+      }
+
+      .zd-ui-top,
+      .zd-ui-bottom {
+        width: 100%;
+        height: 1px;
+        left: 0px;
+      }
+
+      .zd-ui-top {
+        top: 0px;
+      }
+
+      .zd-ui-bottom {
+        bottom: 0px;
+      }
+
+      .zd-ui-right,
+      .zd-ui-left {
+        height: 100%;
+        width: 1px;
+        top: 0px;
+      }
+
+      .zd-ui-left {
+        left: 0px;
+      }
+
+      .zd-ui-right {
+        right: 0px;
+      }
+
+      .zd-ui-top:after,
+      .zd-ui-top:before,
+      .zd-ui-right:after,
+      .zd-ui-right:before,
+      .zd-ui-left:after,
+      .zd-ui-left:before,
+      .zd-ui-bottom:after,
+      .zd-ui-bottom:before {
+        position: absolute;
+        content: " ";
+        height: 9px;
+        width: 9px;
+        box-sizing: border-box;
+        border: 1px solid #92cefd;
+        background-color: white;
+      }
+
+      .zd-ui-top:before,
+      .zd-ui-bottom:before {
+        left: calc(50% - 3px);
+        top: -3px;
+      }
+
+      .zd-ui-top:after {
+        right: -5px;
+      }
+
+      .zd-ui-top:before,
+      .zd-ui-top:after {
+        top: -5px;
+      }
+
+      .zd-ui-bottom:after {
+        left: -5px;
+        top: -3px;
+      }
+
+      .zd-ui-left:before,
+      .zd-ui-right:before {
+        top: calc(50% - 3px);
+      }
+
+      .zd-ui-left:after {
+        top: -5px;
+      }
+
+      .zd-ui-left:before,
+      .zd-ui-left:after {
+        left: -5px;
+      }
+
+      .zd-ui-right:after {
+        bottom: -5px;
+      }
+
+      .zd-ui-right:before,
+      .zd-ui-right:after {
+        left: -3px;
+      }
+
+      .zd-move:hover ~ .zd-ui-border,
+      .zd-resize:hover ~ .zd-ui-border,
+      .zd-move:active ~ .zd-ui-border,
+      .zd-resize:active ~ .zd-ui-border {
+        display: block;
+      }
+
+      .zd-editModeOptions {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        display: none;
+        background-color: #ffffff;
+        border: 1px dotted #cccccc;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+        z-index: 10;
+      }
+
+      .zd-editMode .zd-layer:hover .zd-editModeOptions {
+        display: block;
+      }
+
+      .zd-viewModeOptions {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        cursor: pointer;
+        display: none;
+        box-sizing: border-box;
+        background: none;
+      }
+
+      .zd-viewModeOptions .dashioicon {
+        display: inline-block;
+      }
+
+      .zd-viewMode .zd-layer:hover .zd-viewModeOptions {
+        display: block;
+      }
+
+      .zdjs-svg {
+        position: absolute !important;
+        height: 100% !important;
+        width: 100% !important;
+      }
+
+      .zdjs-rect {
+        fill: #fff;
+        stroke: #000;
+        stroke-width: 1;
+      }
+
+      .zdjs-grid-line {
+        stroke-width: 1px;
+        stroke: rgba(0, 0, 0, 0.3);
+      }
+
+      .zd-Hline {
+      }
+
+      .zd-viewMode .zd-scrollElement {
+        display: none;
+      }
+
+      .ly-wrapper {
+        border-style: solid;
+        border-color: transparent;
+      }
+
+      .ly-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      .ly-node {
+        box-sizing: border-box !important;
+        position: absolute;
+        border-style: solid !important;
+        border-color: transparent !important;
+      }
+
+      .ly-autoHeight {
+        height: auto;
+      }
+
+      .header {
+        height: 50px;
+      }
+
+      #container,
+      #container1 {
+        height: 700;
+        width: 60%;
+
+        box-sizing: border-box;
+        outline: 1px solid red;
+        margin: auto;
+        position: relative;
+      }
+
+      #propsBtn {
+        position: fixed;
+        top: 0px;
+        right: 10px;
+        width: 80px;
+        height: 30px;
+        background-color: #555;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        box-shadow: 0px 3px 5px 0px #9a9a9a;
+        text-align: center;
+        padding: 8px;
+        box-sizing: border-box;
+        color: #cccccc;
+        font-weight: 600;
+        z-index: 3;
+      }
+
+      #props {
+        position: fixed;
+        top: 50px;
+        height: calc(100% - 100px);
+        width: calc(100% - 30px);
+        border-radius: 4px;
+        transition: left 0.3s, width 0.3s, background-color 0.3s;
+        background-color: #333;
+        padding: 10px;
+        box-sizing: border-box;
+        z-index: 3;
+      }
+
+      .propInactive {
+        left: -100%;
+      }
+
+      .propActive {
+        left: 15px;
+      }
+
+      #propsExit {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 15px;
+        height: 15px;
+        overflow: hidden;
+      }
+
+      #propsExit:after,
+      #propsExit:before {
+        content: " ";
+        position: absolute;
+        top: 0px;
+        left: calc(50% - 1px);
+        transform: rotate(-45deg);
+        background: #cccccc;
+        height: 100%;
+        width: 2px;
+      }
+
+      #propsExit:before {
+        transform: rotate(45deg);
+      }
+
+      .JSONStore {
+        width: 50%;
+        height: 100%;
+        padding: 10px;
+        overflow: auto;
+        border-radius: 4px;
+        color: white;
+        box-sizing: border-box;
+        border: 1px solid white;
+        margin: 0px;
+        background-color: #111;
+      }
+
+      .ly-wrapper {
+        max-height: 100%;
+        border-color: transparent;
+        border-style: solid;
+        position: absolute;
+        border-width: 0px;
+        transition: transform 0.2s;
+      }
+
+      .ly-holder {
+        min-height: 100%;
+      }
+
+      .NodeContent {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        margin: auto;
+        border-radius: 3px;
+        box-sizing: border-box;
+        transition: background-color 2s;
+        background: #303030;
+      }
+
+      .NodeUserFilter {
+        height: 5px;
+        outline: 2px solid red;
+      }
+
+      .lm-resize-Top,
+      .lm-resize-TopRight,
+      .lm-resize-TopLeft,
+      .lm-resize-Left,
+      .lm-resize-Right,
+      .lm-resize-Bottom,
+      .lm-resize-BottomRight,
+      .lm-resize-BottomLeft {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        z-index: 2;
+
+        background: #93daff;
+        opacity: 0;
+        transition: 0.3s opacity;
+      }
+
+      .lm-resize-TopRight,
+      .lm-resize-TopLeft,
+      .lm-resize-BottomRight,
+      .lm-resize-BottomLeft {
+        width: 10px;
+        height: 10px;
+        background: transparent;
+        border-color: #5cc3fe;
+        border-left-color: transparent;
+        border-top-color: transparent;
+        opacity: 0;
+        z-index: 3;
+      }
+
+      .lm-resize-Top:hover,
+      .lm-resize-TopRight:hover,
+      .lm-resize-TopLeft:hover,
+      .lm-resize-Left:hover,
+      .lm-resize-Right:hover,
+      .lm-resize-Bottom:hover,
+      .lm-resize-BottomRight:hover,
+      .lm-resize-BottomLeft:hover {
+        opacity: 1;
+      }
+
+      .lm-resize-Top,
+      .lm-resize-TopRight,
+      .lm-resize-TopLeft,
+      .lm-resize-Left,
+      .lm-resize-Right {
+        top: 0px;
+      }
+
+      .lm-resize-Left,
+      .lm-resize-Bottom,
+      .lm-resize-Top,
+      .lm-resize-BottomLeft,
+      .lm-resize-TopLeft {
+        left: 0px;
+      }
+
+      .lm-resize-Right,
+      .lm-resize-BottomRight,
+      .lm-resize-TopRight {
+        right: 0px;
+      }
+
+      .lm-resize-Left,
+      .lm-resize-Right {
+        width: 10px;
+        height: 100%;
+        background: transparent;
+      }
+
+      .lm-resize-Bottom,
+      .lm-resize-BottomRight,
+      .lm-resize-BottomLeft {
+        bottom: 0px;
+      }
+
+      .lm-resize-Top,
+      .lm-resize-Bottom {
+        width: 100%;
+        height: 10px;
+
+        left: 0;
+        background: transparent;
+      }
+
+      .lm-resize-Top {
+        cursor: ns-resize;
+      }
+
+      .lm-resize-TopRight {
+        cursor: nesw-resize;
+        border-bottom-left-radius: 2px;
+      }
+
+      .lm-resize-TopLeft {
+        cursor: nwse-resize;
+        border-bottom-right-radius: 2px;
+      }
+
+      .lm-resize-Left {
+        cursor: ew-resize;
+        transform: rotate(180deg);
+      }
+
+      .lm-resize-Right {
+        cursor: ew-resize;
+      }
+
+      .lm-resize-Bottom {
+        cursor: ns-resize;
+      }
+
+      .lm-resize-BottomRight {
+        cursor: nwse-resize;
+        border-top-left-radius: 2px;
+      }
+
+      .lm-resize-BottomLeft {
+        cursor: nesw-resize;
+        border-top-right-radius: 2px;
+      }
+
+      .lm-rearrange {
+        height: 20px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        box-sizing: border-box;
+        top: 0;
+        left: 0;
+
+        cursor: move;
+        overflow: hidden;
+        border: none !important;
+        box-shadow: none !important;
+        background-color: rgba(0, 0, 0, 0);
+      }
+
+      .ly-container:hover .lm-rearrange {
+        display: block;
+      }
+
+      .ly-node.ly-selected .lm-resize-Top,
+      .ly-node.ly-selected .lm-resize-TopRight,
+      .ly-node.ly-selected .lm-resize-TopLeft,
+      .ly-node.ly-selected .lm-resize-Left,
+      .ly-node.ly-selected .lm-resize-Right,
+      .ly-node.ly-selected .lm-resize-Bottom,
+      .ly-node.ly-selected .lm-resize-BottomRight,
+      .ly-node.ly-selected .lm-resize-BottomLeft,
+      .ly-container:hover .lm-resize-Top,
+      .ly-container:hover .lm-resize-TopRight,
+      .ly-container:hover .lm-resize-TopLeft,
+      .ly-container:hover .lm-resize-Left,
+      .ly-container:hover .lm-resize-Right,
+      .ly-container:hover .lm-resize-Bottom,
+      .ly-container:hover .lm-resize-BottomRight,
+      .ly-container:hover .lm-resize-BottomLeft {
+        display: block;
+      }
+
+      .yLine {
+        position: fixed;
+        height: 1px;
+        background: royalblue;
+        width: 100%;
+        top: 0px;
+        z-index: 10000;
+        display: none;
+      }
+
+      .xLine {
+        position: fixed;
+        height: 100%;
+        background: royalblue;
+        width: 1px;
+        top: 0;
+        z-index: 10000;
+        display: none;
+      }
+
+      #leftArea {
+        height: 100%;
+        width: 80px;
+        position: fixed;
+        top: 0;
+        right: calc(0% - 75px);
+        background: #bfbfbf;
+        transition: right 0.3s;
+        overflow: auto;
+      }
+
+      #leftArea:hover {
+        right: 0px;
+      }
+
+      .dragObject {
+        width: 80%;
+        height: 20px;
+        background: #62747b;
+        margin: auto;
+        margin-top: 10px;
+        border-radius: 3px;
+        box-sizing: border-box;
+        cursor: move;
+      }
+
+      .dragObject:hover {
+        border: 3px dashed black;
+      }
+
+      .email-Outer {
+        max-width: 0px;
+        max-height: 0px;
+      }
+
+      .node-Preview {
+      }
+
+      .ly-wrapper {
+        position: relative;
+      }
+
+      .ly-node {
+        position: absolute;
+        box-sizing: border-box;
+        border-style: solid;
+        border-color: transparent;
+        top: 0px;
+        left: 0px;
+      }
+
+      .ly-container {
+        position: absolute;
+        box-sizing: border-box;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: 100%;
+      }
+
+      .ly-autoHeight {
+        height: auto;
+      }
+
+      .node-Preview {
+        z-index: 0 !important;
+      }
+
+      .node-Preview .ly-container {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .ly-nodeEvent .ly-node {
+        transition: left 0.2s, width 0.2s, height 0.2s, top 0.2s, transform 0.2s;
+        z-index: 0;
+      }
+
+      .ly-nodeEvent .dropArea {
+        opacity: 0.8;
+      }
+
+      .ly-nodeEvent .ly-node.ly-selected {
+        transition: none;
+        z-index: 1;
+      }
+
+      .ly-bgElement {
+        height: 100%;
+      }
+
+      .lm-rearrange:hover .lm-resize-BottomLeft,
+      .lm-rearrange:hover .lm-resize-BottomRight,
+      .ly-selected .lm-resize-BottomLeft,
+      .ly-selected .lm-resize-BottomRight {
+        opacity: 1;
+      }
+
+      .lm-resize-BottomRight {
+        border-style: solid;
+        border-width: 7px;
+        width: 0px;
+        height: 0px;
+      }
+
+      .lm-resize-BottomLeft {
+        border-style: solid;
+        border-width: 7px;
+        width: 0px;
+        height: 0px;
+        transform: rotate(90deg);
+      }
+
+      .ly-deleteIcon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 20px;
+        width: 20px;
+
+        visibility: hidden;
+        background-position: -87px -50px;
+      }
+
+      .ly-node .dashChild {
+        overflow: visible;
+      }
+
+      .ly-node .dashChildPar {
+        overflow: hidden;
+      }
+
+      .lm-rearrange:hover .ly-deleteIcon {
+        visibility: visible;
+      }
+
+      .zd-editModeOptions {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+      }
+
+      .lm-rearrange:hover .zd-editModeOptions {
+        display: block;
+      }
+
+      .zr-ufLayer .lm-rearrange {
+        height: 33px;
+      }
+
+      .no-read .openInTab {
+        display: none;
+      }
+
+      .zr-ScrollableChild .dashChildContent {
+        overflow: auto;
+      }
+
+      .ly-lineEl {
+        position: absolute;
+        background-color: #ff3ffc;
+        display: none;
+      }
+
+      .ly-lineEl-x,
+      .ly-lineEl-right {
+        width: 1px;
+        top: 0px;
+        height: 100%;
+      }
+
+      .ly-lineEl-y,
+      .ly-lineEl-bottom {
+        width: 100%;
+        left: 0px;
+        height: 1px;
+      }
+
+      .ly-lineWrapper {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        z-index: 1;
+        position: relative;
+      }
+
+      .zdbdeditmode .ly-lineWrapper {
+        overflow-y: scroll;
+      }
+
+      .ly-borderDashedLine {
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        border-left: 1px dashed #ff3ffc;
+        display: none;
+      }
+
+      .ly-dashChildWrapper {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .ly-container #ZDBDashEditOptsMenu {
+        border-color: transparent !important;
+        box-shadow: none !important;
+      }
+
+      .ly-lineWrapper.overFlowInitial {
+        overflow: initial;
+      }
+
+      .ly-node .dFilterHolder .VMFilterCompDrgEl {
+        padding: 0px 10px 0px 0px !important;
+      }
+
+      .ly-freezeLayer {
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        z-index: 999999;
+      }
+
+      .ly-htmlAlignCenter {
+        height: auto;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .ZRDashInstruction {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 0;
+        opacity: 0;
+        text-align: center;
+        transition: opacity 0.3s;
+      }
+
+      .zr_dash_instruction {
+        background-color: rgba(248, 248, 248, 0.9);
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        width: 600px;
+        padding: 0px 1.33em 1.33em;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .zr_dash_instruction li {
+        margin-bottom: 5px;
+      }
+
+      .zdbdviewmode .ZRDashInstruction {
+        display: none;
+      }
+
+      .zr-inlineEmail .ly-container {
+        position: static !important;
+      }
+
+      .dashEditMultiSelect .lm-rearrange {
+        margin: 0px !important;
+      }
+
+      .minRightResizeBorder:before {
+        border-right-color: red;
+      }
+
+      .minBottomResizeBorder:before {
+        border-bottom-color: red;
+      }
+
+      .minLeftResizeBorder:before {
+        border-left-color: red;
+      }
+
+      @keyframes notValidDashChildOperation {
+        0% {
+          box-shadow: 0px 0px 0px 1px transparent inset;
+        }
+        50% {
+          box-shadow: 0px 0px 0px 1px red inset;
+        }
+        100% {
+          box-shadow: 0px 0px 0px 1px transparent inset;
+        }
+      }
+      .invalidWidthResizeOperation,
+      .invalidHeightResizeOperation {
+        box-shadow: 0px 0px 0px 2px transparent inset !important;
+        transition: box-shadow 0.5s;
+      }
+
+      .invalidMultiSelectWidthResize .invalidWidthResizeOperation,
+      .invalidMultiSelectHeightResize .invalidHeightResizeOperation {
+        box-shadow: 0px 0px 0px 2px red inset !important;
+      }
+
+      @keyframes multiSelectInvalid {
+        0% {
+          border-color: #558ffa;
+        }
+        50% {
+          border-color: red;
+        }
+        100% {
+          border-color: #558ffa;
+        }
+      }
+      .multiSelectInvalid:before {
+        animation-name: multiSelectInvalid;
+        animation-duration: 0.5s;
+        animation-iteration-count: 2;
+      }
+
+      @-webkit- @keyframes beforeAfterPaddings {
+        from {
+          opacity: 0;
+          background: transparent;
+        }
+      }
+      @-moz- @keyframes beforeAfterPaddings {
+        from {
+          opacity: 0;
+          background: transparent;
+        }
+      }
+      @-o- @keyframes beforeAfterPaddings {
+        from {
+          opacity: 0;
+          background: transparent;
+        }
+      }
+      @-ms- @keyframes beforeAfterPaddings {
+        from {
+          opacity: 0;
+          background: transparent;
+        }
+      }
+      @keyframes beforeAfterPaddings {
+        from {
+          opacity: 0;
+          background: transparent;
+        }
+      }
+      .maxmin_icon {
+        width: 15px;
+        height: 15px;
+        margin-top: 2px;
+      }
+
+      .maxmin_icon::before {
+        content: "";
+        height: 0;
+        width: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid grey;
+        border-top: 5px solid transparent;
+        position: relative;
+        display: block;
+        transform: rotate(45deg);
+        left: 7px;
+        bottom: 2px;
+      }
+
+      .maxmin_icon::after {
+        content: "";
+        height: 0;
+        width: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid grey;
+        position: relative;
+        display: block;
+        transform: rotate(45deg);
+        right: 2px;
+        bottom: 3px;
+      }
+
+      .restore_icon .maxmin_icon::before {
+        content: "";
+        height: 0;
+        width: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid gray;
+        border-top: 5px solid transparent;
+        position: relative;
+        display: block;
+        transform: rotate(45deg);
+        left: 2px;
+
+        top: 3px;
+      }
+
+      .restore_icon .maxmin_icon::after {
+        content: "";
+        height: 0;
+        width: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid gray;
+        position: relative;
+        display: block;
+        transform: rotate(45deg);
+        bottom: 8px;
+        left: 3px;
+      }
+
+      .maxmin_icon:hover:before {
+        border-bottom: 5px solid #2486fc;
+      }
+
+      .maxmin_icon:hover:after {
+        border-top: 5px solid #2486fc;
+      }
+
+      .optionsIcons,
+      .optionsSvg,
+      .optionsSvgPar {
+        float: left;
+        margin-left: 5px;
+        margin-top: 2px;
+        height: 24px;
+        width: 24px;
+        line-height: 24px;
+        vertical-align: middle;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: var(--mediumfont);
+        padding-top: 2px;
+      }
+
+      .timeLineEditIcon {
+        visibility: hidden;
+      }
+
+      .timeLineEnabled .timeLineEditIcon {
+        visibility: visible;
+      }
+
+      .refreshOption {
+        background-position: 3px -47px;
+      }
+
+      .refreshOption:hover {
+      }
+
+      .settingsOption {
+        background-position: -126px -50px;
+      }
+
+      .settingsOption:hover {
+      }
+
+      .contractMenu {
+        background-position: -96px -427px;
+      }
+
+      .contractMenu:hover {
+        background-position: -46px -427px;
+      }
+
+      .expandMenu {
+        background-position: -272px -427px;
+      }
+
+      .expandMenu:hover {
+        background-position: -222px -427px;
+      }
+
+      .duplicateMenu {
+        background-position: -90px -397px;
+      }
+
+      .duplicateMenu:hover {
+      }
+
+      .deleteMenu {
+        background-position: -83px -50px;
+      }
+
+      .deleteMenu:hover {
+      }
+
+      .optionsIcons.moreOptions,
+      .dashviewmoreoptions {
+        position: relative;
+        width: 25px;
+        margin-left: 0px;
+      }
+
+      .dashEditMenu {
+        position: fixed;
+        right: 10px;
+        top: 5px;
+        background: white;
+        width: 116px;
+        border: 1px solid #bbbbbb;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        padding-top: 0px;
+        display: none;
+        visbility: hidden;
+        box-sizing: border-box;
+        border-radius: 2px;
+        padding: 5px;
+        color: #333333;
+      }
+
+      .dashEditMenu .svgIconsCommonCls {
+        width: 13px;
+        height: 13px;
+        stroke: #6c6c6c;
+        stroke-width: 0.5px;
+        margin-top: 4px;
+      }
+
+      .dashEditMenu .optionsSvgPar {
+        display: block;
+        width: 100%;
+        border-radius: 0px;
+        margin-left: 0px;
+        padding-top: 0px;
+        margin-top: 1px;
+        margin-bottom: 1px;
+      }
+
+      .dashEditMenu .svgText {
+        margin-left: 24px;
+
+        padding-left: 5px;
+      }
+
+      .dashEditMenu .optionsIcons:first-child {
+        margin-top: 0px;
+      }
+
+      .dashEditMenu .optionsSvgPar:hover {
+        background-color: #2e8fda;
+      }
+
+      .dashEditMenu .optionsSvgPar:hover div {
+        color: white;
+      }
+
+      .dashEditMenu .optionsSvgPar .optionsSvg {
+        margin-top: -1px;
+      }
+
+      .dashEditMenu .optionsSvg .svgIconsCommonCls:hover,
+      .dashEditMenu .optionsSvgPar:hover .optionsSvg .svgIconsCommonCls {
+        fill: #ffffff !important;
+        stroke: #ffffff !important;
+      }
+
+      .dashEditMenu .optionsIcons {
+        display: block;
+        width: 100%;
+        border-radius: 0px;
+        margin-left: 0px;
+        padding-top: 0px;
+        margin-top: 1px;
+        margin-bottom: 1px;
+      }
+
+      .dashEditMenu .optionsIcons div {
+        margin-left: 24px;
+        background: white;
+        padding-left: 5px;
+      }
+
+      .dashEditMenu .optionsIcons:first-child {
+        margin-top: 0px;
+      }
+
+      .dashEditMenu .optionsIcons:hover,
+      .dashEditMenu .optionsIcons:hover div {
+        background-color: #2e8fda;
+      }
+
+      .dashEditMenu .optionsIcons:hover div {
+        color: white;
+      }
+
+      .dashEditMenu .ZRSPointerTopAfter,
+      .dashEditMenu .ZRSPointerTopBefore {
+        bottom: 100%;
+      }
+
+      .dashEditMenu .ZRSPointerTopBefore {
+        border-bottom-color: #bbbbbb;
+        border-width: 12px !important;
+        margin-left: -12px !important;
+      }
+
+      .dashEditMenu .ZRSPointerTopAfter {
+        border-bottom-color: white;
+      }
+
+      #ZDBDashInstruction ul li {
+        line-height: 30px;
+        width: 90%;
+        list-style: none outside none;
+        font-size: var(--mediumfont);
+        color: #000;
+        margin-left: 30px;
+      }
+
+      #ZDBInsertIndicator {
+        border: 2px dashed #008aff;
+      }
+
+      .dashboardTitleFont,
+      .dashboardDescFont {
+        font-size: var(--largefont);
+      }
+
+      .zdbdeditmode .dashboardTitleFont,
+      .zdbdeditmode .dashboardDescFont {
+        padding-left: 5px;
+      }
+
+      .dashboardTitleFont {
+        font-size: var(--font14);
+        font-weight: var(--font-weight-bold);
+        font-family: var(--font-family-bold);
+      }
+
+      .dashboarddescFont {
+        font-size: var(--mediumfont);
+        color: #808081;
+        margin-top: 2px;
+      }
+
+      .autoAddVMFiltersElStyle {
+        float: right;
+        font-size: var(--smallfont);
+        color: #000;
+        height: 28px;
+        line-height: 30px;
+      }
+
+      .zdbdeditmode:not(.dashLayout) #dashboardVMFArea {
+        margin-top: 10px !important;
+        margin-top: 10px;
+      }
+
+      #ZDBDashEditOptsMenu {
+        border: 1px dotted #cccccc;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+        background-color: #ffffff;
+      }
+
+      .zdbdeditmode .table-cell,
+      .zdbdeditmode .multiColEdit,
+      .zdbdeditmode .dashColDiv {
+        border: 1px dotted #cccccc;
+      }
+
+      .modalDivDragMode {
+        background: #ffffff;
+        border: 1px dashed #ff0000;
+        margin: -1px 0px 0px -1px;
+        opacity: 0.5;
+      }
+
+      .zdbdeditmode .dashRowDivEdit {
+        margin-top: 10px;
+      }
+
+      .dashModalDivPressed {
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .dashDnDMoveDiv {
+        font-size: var(--mediumfont);
+        width: 186px;
+        height: 26px;
+      }
+
+      .dragEl-viewName {
+        overflow: hidden;
+        width: calc(100% - 25px);
+        text-overflow: ellipsis;
+        display: inline-block;
+      }
+
+      .moveDivIco {
+        margin-right: 5px;
+        cursor: move !important;
+      }
+
+      .dashChild[viewtype="WIDGET"] .dashviewoptionscell.openInTab,
+      .dashChild[viewtype="WIDGET"] .dashviewoptionscell.openViewInTab {
+        display: none !important;
+      }
+
+      .ZDBDashboardEditorEl [isvalidfiltercriteria="false"] .dashviewoptions,
+      .ZDBDashboardEditorEl [viewtype="WIDGET"] .dashChildTitleArea {
+        display: none !important;
+      }
+
+      .ZDBDashboardEditorEl [viewtype="text"] .dashChildTitleDesc,
+      .ZDBDashboardEditorEl [viewtype="text"] .dashviewoptions {
+        display: none !important;
+      }
+
+      .ZDBDashboardEditorEl [viewtype="WIDGET"] .dashChildTitleArea {
+        display: none;
+      }
+
+      .ZDBDashboardEditorEl [viewtype="text"] .dashChildTitleArea {
+        display: none;
+      }
+
+      .dashviewoptions {
+        top: 10px;
+        right: 5px;
+        cursor: pointer;
+        z-index: 1;
+        display: none;
+        box-sizing: border-box;
+        background-image: none;
+        border: none;
+        padding: 0;
+        background-color: rgba(255, 255, 255, 0.8);
+        top: 2px !important;
+        right: 5px !important;
+        position: absolute !important;
+        height: 24px !important;
+        overflow: hidden !important;
+      }
+
+      div[disableviewoptions] .dashviewoptionsrow > div:not(.moreOptions) {
+        display: none !important;
+      }
+
+      div[disableVUD] .dashviewoptionscell.moreOptions[isExp="false"] {
+        display: none !important;
+      }
+
+      .fcPreviewRequest .dashviewoptions {
+        display: none !important;
+      }
+
+      .zdbdviewmode .dashChild:hover .dashviewoptions,
+      .zdbdviewmode .showdashviewoptions .dashviewoptions {
+        display: block;
+      }
+
+      .showdashviewoptions .dashviewoptionsrow [selected="true"] {
+        border-bottom-width: 1px;
+      }
+
+      .dashviewoptionscell {
+        display: inline-block;
+        border: 1px solid transparent;
+        margin-left: 2px;
+        vertical-align: top;
+      }
+
+      .dashChild[eltype="HTML"] .dashviewoptionscell.moreOptions {
+        display: none;
+      }
+
+      .dashChild[eltype="HTML"] .dashviewoptionscell.openViewInTab {
+        display: none;
+      }
+
+      .dashChild[eltype="EMBED"] .dashviewoptionscell.moreOptions {
+        display: none;
+      }
+
+      .dashChild[eltype="EMBED"] .dashviewoptionscell.openInTab {
+        display: none;
+      }
+
+      .widget .dashviewoptionscell.openInTab {
+        display: none;
+      }
+
+      .widget .dashviewoptionscell.openViewInTab {
+        display: none;
+      }
+
+      .widget .dashviewoptionscell.cardEdit {
+        display: none;
+      }
+
+      .dashviewoptionscell.cardEdit {
+        display: none;
+      }
+
+      .zr-textChild .dashviewoptionscell.maxmin {
+        display: none;
+      }
+
+      .zr-textChild .dashviewoptionscell.moreOptions {
+        display: none;
+      }
+
+      .restore_icon .enableEdit .dashviewoptionscell.cardEdit {
+        display: inline-block;
+      }
+
+      .restore_icon .widget .dashviewoptionscell.cardEdit {
+        display: none;
+      }
+
+      .dashviewoptionscell.moreOptions {
+        margin-left: 0px;
+        width: 22px;
+        overflow: hidden;
+        text-align: center;
+        height: 26px !important;
+        border-bottom: none;
+      }
+
+      .dashviewoptionscell.moreOptions.ZRSDropDown {
+        border: 1px solid #bbbbbb;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        z-index: 7999 !important;
+      }
+
+      .dashviewoptionscell.moreOptions .dashviewmoreoptions {
+        transform: translateX(-2px);
+        -ms-transform: translateX(-2px);
+      }
+
+      .dashChild[desc="false"][showtitle="false"]
+        .dashviewoptionscell.moreOptions
+        .dashviewmoreoptions {
+        transform: translateX(-2px) translateY(-2px);
+        -ms-transform: translateX(-2px) translateY(-2px);
+      }
+
+      .dashviewoptionsrow {
+        font-size: 0;
+      }
+
+      .dashviewoptions .newGrpTextBtn {
+        background-color: #fff;
+      }
+
+      .dashviewoptionsct {
+        display: none;
+        width: 30px;
+        border: 1px solid transparent;
+      }
+
+      .dashviewoptionsct.ZRMiniChartSrc.WTTheme {
+        position: relative;
+        z-index: 1996;
+      }
+
+      .dashviewoptions.analysisview .dashviewoptionsct {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .dashviewoptions.table .viewunderlyingdataicon,
+      .dashviewoptions.report .viewunderlyingdataicon,
+      .dashviewoptions.querytable .viewunderlyingdataicon {
+        display: none;
+      }
+
+      .dashioicon {
+        width: 25px;
+        height: 25px;
+      }
+
+      .dashioSvg {
+        width: 25px;
+        height: 25px;
+      }
+
+      .openinnewtabicon {
+        background-position: 3px -980px;
+        background-repeat: no-repeat;
+      }
+
+      .openinnewtabicon:hover {
+        background-position: -23px -980px;
+      }
+
+      .changecharttypeicon {
+        background-position: -58px -980px;
+        margin-left: 4px;
+      }
+
+      .dashboardChartSortMenuSvg {
+        margin-left: 8px;
+      }
+
+      .changecharttypeSvg {
+        margin-left: 4px;
+      }
+
+      .changecharttypeicon:hover {
+        background-position: -89px -980px;
+      }
+
+      .viewunderlyingdataicon {
+        background-position: -116px -980px;
+      }
+
+      .viewunderlyingdataicon:hover {
+        background-position: -147px -980px;
+      }
+
+      .dashexporticon {
+        background-position: -21px -681px;
+      }
+
+      .dashexporticon:hover {
+        background-position: -48px -681px;
+      }
+
+      .dashVM_moreOpts {
+        border-radius: 3px;
+        border-top-right-radius: 0px;
+        padding: 5px 0px;
+        width: 136px;
+        background-color: #ffffff;
+        color: #333333;
+        border: 1px solid #bbbbbb;
+      }
+      .dashVM_moreOpts .ZRSMenuHover {
+        background-color: #2e8fda;
+        color: #ffffff;
+      }
+
+      .dashboardChartSortMenu,
+      .dashboardChartSortSubMenu {
+        background-color: #ffffff;
+        color: #333333;
+        border: 1px solid #bbbbbb;
+      }
+
+      div:not(.za-modal-menu).dashVM_moreOpts:after,
+      div:not(.za-modal-menu).ZRMiniChartType:after,
+      div:not(.za-modal-menu).dashboardChartSortMenu:after {
+        display: block;
+        position: absolute;
+        content: " ";
+        top: -1px;
+        right: 0px;
+        background: white;
+        height: 1px;
+        width: 22px;
+      }
+
+      div:not(.za-modal-menu).ZRMiniChartType:after,
+      div:not(.za-modal-menu).dashboardChartSortMenu:after {
+        width: 30px;
+      }
+
+      .dashVM_moreOpts.noVUD #ZDBDShowVUD,
+      .dashVM_moreOpts.noExp #ZDBDExportSubMenu {
+        display: none;
+      }
+
+      .dashviewoptions .svgIconsCommonCls {
+        height: 15px;
+        margin-top: 3px;
+      }
+
+      .ZRDash-TypeBtn a {
+        font-size: var(--mediumfont);
+        text-shadow: none;
+      }
+
+      .ZRDash-TypeBtn.Atype a.old,
+      .ZRDash-TypeBtn.Btype a.new {
+        background: -webkit-gradient(
+          linear,
+          50% 0%,
+          50% 100%,
+          from(#17ba9a),
+          to(#1d9e86)
+        ) !important;
+        border-color: #1ca48a;
+        color: white !important;
+      }
+
+      .dash-prop-text {
+        opacity: 0;
+        font-size: var(--font13);
+        color: #0055d0;
+        display: none;
+        vertical-align: middle;
+        height: 100%;
+        transition-delay: 3s;
+        background: white;
+      }
+
+      .dash-prop-text .dash-sw-old,
+      .dash-prop-text .dash-sw-new {
+        text-align: center;
+        overflow: hidden;
+        transition: all 0.3s;
+        white-space: nowrap;
+        border-radius: 2px;
+      }
+
+      .dash-prop-parts {
+        margin-left: 5px;
+        display: none;
+      }
+
+      .dash-evet {
+        cursor: pointer;
+      }
+
+      .dash-prop-parts {
+        float: left;
+      }
+
+      .dash-prop-text.dash-tryNew .dash-sw-old,
+      .dash-prop-text.dash-tryNew .dash-load-new,
+      .dash-prop-text.dash-tryNew .dash-load-old,
+      .dash-prop-text.dash-switchOld
+        .dash-sw-new
+        .dash-prop-text.dash-switchOld
+        .dash-load-new,
+      .dash-prop-text.dash-switchOld .dash-load-old {
+        display: none;
+      }
+
+      .dash-prop-text.dash-tryNew .dash-sw-new,
+      .dash-prop-text.dash-switchOld .dash-sw-old,
+      .dash-prop-text.dash-loadNew .dash-load-new,
+      .dash-prop-text.dash-loadOld .dash-load-old {
+        display: inline-block;
+      }
+
+      .dash-evet:hover,
+      .dash-evet:hover {
+        text-decoration: underline;
+      }
+
+      .dashSingleColModDiv {
+        background-color: black;
+        opacity: 0.8;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 1000;
+      }
+
+      .CardSelected#ZDBDashEditOptsMenu {
+        display: block !important;
+      }
+
+      .dashLayout .dropArea .ly-container {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: #8c97aa;
+        font-weight: var(--font-weight-bold);
+        font-family: var(--font-family-bold);
+        font-size: var(--smallfont) !important;
+      }
+
+      .dashLayout .dropArea .ly-container:after {
+        content: "DROP HERE";
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+      }
+
+      .selectModeOpt {
+        overflow: hidden;
+        transition: width 1s;
+        width: 0px;
+        border: 1px solid transparent;
+      }
+
+      .selectModeOptExpanded {
+        border-color: red;
+        display: block;
+        width: 150px;
+      }
+
+      .dashModDivSelectOpt {
+        display: none;
+      }
+
+      .selectMode .dashChildSel .dashModDivSelectOpt {
+        display: block;
+        cursor: pointer;
+      }
+
+      .selectMode .selectModeChildSelect {
+        display: none;
+      }
+      .selectedView .selectMode .selectModeChildSelect {
+        display: block;
+      }
+
+      .selectModeChildDiv {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        cursor: pointer;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.01);
+      }
+      .selectModeChildDiv:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+
+      .selectModeButton {
+        background-color: rgba(68, 162, 226, 0.1) !important;
+        border: 1px solid #44a2e2;
+      }
+
+      .selectModeChildDivSelectBanner {
+        position: absolute;
+        height: 28px;
+        width: 28px;
+        border-radius: 50%;
+        background: #428bf6;
+        top: 5px;
+        right: 5px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      .clearDashSelectViews:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .dashChild[selected="true"] [elname="viewOptions"],
+      .dashChild[selected="true"] [elname="moreOptions"],
+      .dashChild[selected="true"] [elname="cardEditNew"],
+      .dashChild[selected="true"] [elname="fill"] {
+        display: none;
+      }
+
+      .dashOptsSubHeader {
+        float: left;
+        width: 100%;
+        padding-left: 5px;
+        line-height: 24px;
+        color: #c5cad6;
+        font-style: italic;
+      }
+
+      .dashEditMultiSelect {
+        border-width: 0px !important;
+      }
+
+      .dashEditMultiSelect:before {
+        content: "";
+        height: 100%;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+        position: absolute;
+        box-sizing: border-box;
+        border-style: solid;
+        border-color: #558ffa;
+        transition: border-color 0.5s;
+      }
+
+      .dashEditZIndex:before {
+        z-index: 100;
+      }
+
+      .dashSelectMode {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .dashSelectMode #ZDBDashEditOptsMenu {
+        display: none;
+      }
+
+      .zdembedpadding {
+        padding: 10px;
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
+      }
+
+      .dashMultiSelectParCont {
+        position: absolute;
+      }
+
+      .dashChild[desc="false"][showtitle="false"] .dashviewoptions.pivot {
+        z-index: 6;
+      }
+
+      .zdbdviewmode[preventtouchaction="true"] .mapboxgl-canvas,
+      .zdbdviewmode[preventtouchaction="true"] .mapboxgl-canvas-container {
+        touch-action: unset !important;
+      }
+
+      .zdhtmlwrap {
+        overflow: auto !important;
+        word-wrap: break-word;
+        height: 100%;
+      }
+
+      .zdhtmlpadding {
+        padding: 15px;
+      }
+
+      #rankingRefColList .refColList {
+        display: block;
+      }
+
+      .zdbdeditmode {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+      }
+
+      .zdbdeditmode {
+        overflow-y: scroll;
+      }
+
+      .zdbdviewmode {
+        overflow-y: auto;
+      }
+
+      .zdbdviewmode,
+      .zdbdeditmode {
+        overflow-x: hidden !important;
+      }
+
+      .zdbdviewmode ~ .gridPattern {
+        display: none;
+      }
+
+      .dashSubGrid {
+        stroke: #e6e6e6;
+      }
+
+      .dashGrid {
+        stroke: #d3d3d3;
+      }
+
+      .dashGrid rect {
+        fill: #dedede;
+      }
+
+      .dashboardDesignerStyle .noeffect {
+        margin: 0px;
+        padding: 2px !important;
+      }
+
+      .dashModalDiv,
+      .modalDivDragMode,
+      .dashModalDivPressed,
+      .scrollFreeze {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 5;
+        height: 100%;
+        width: 100%;
+        cursor: move;
+        border: 1px solid transparent;
+      }
+
+      .scrollFreeze {
+        cursor: default;
+        box-sizing: border-box;
+      }
+
+      [expanded="true"] .scrollFreeze {
+        display: none !important;
+      }
+
+      .dashScrollFreeze {
+        display: inline-block;
+        position: relative;
+      }
+
+      .dashModalDiv,
+      .dashModalDivPressed {
+        background: rgba(0, 0, 0, 0);
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .defaultMsg {
+        color: #858585;
+        font-size: var(--font14);
+      }
+
+      .tableItem {
+        padding: 2px;
+      }
+
+      .ZDBDashboardItemTable {
+        border: 1px solid #ebebea;
+      }
+
+      .ZDBDashboardItemTableLighter {
+        border: 1px solid #f7f7f7;
+      }
+
+      .ZDBDashboardItemTitle {
+        background: none;
+        cursor: move;
+      }
+
+      .ZDBDashboardItemIcon {
+        color: #333333;
+        font-size: var(--mediumfont);
+        cursor: move;
+        padding: 2px;
+        padding-left: 20px;
+      }
+
+      .ZDBDashboardItemBody {
+        border: 1px solid #b3cee1;
+      }
+
+      .zdbinnerViewOptions {
+        background: #c7e2f3;
+        border-top: 1px solid #d7edff;
+        border-right: 1px solid #9fb7c7;
+        border-bottom: 1px solid #9fb7c7;
+        border-left: 1px solid #d7edff;
+        cursor: pointer;
+        padding: 1px;
+        padding-right: 4px;
+        padding-left: 5px;
+        font-size: var(--font9);
+      }
+
+      .dashChild,
+      .dashChildEdit,
+      .dashChildEditSmall {
+        background-color: #ffffff;
+
+        overflow: hidden;
+        font-size: var(--mediumfont);
+        color: #000;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        border: 1px solid transparent;
+      }
+
+      .zdbdeditmode .dashChild:hover,
+      .zdbdeditmode .dashChildEdit:hover,
+      .zdbdeditmode .dashChildEditSmall:hover {
+      }
+
+      .dashChild {
+      }
+
+      .dashChildEdit {
+        border: 1px solid #cccccc;
+      }
+
+      .dashChildEditSmall {
+        border: 1px solid #cccccc;
+        position: relative;
+      }
+
+      .emptyDashCellSel {
+        background: #ffffcc;
+        border: 2px dashed #c9955e;
+      }
+
+      .optionsBg {
+        background-repeat: repeat-x;
+        background-attachment: scroll;
+        background-position: -128px -1280px;
+        height: 24px;
+        float: left;
+        margin-top: 2px;
+      }
+
+      .leftCorner {
+        background-repeat: no-repeat;
+        background-position: 0px -1235px;
+        width: 4px;
+      }
+
+      .rightCorner {
+        background-repeat: no-repeat;
+        background-position: -24px -1235px;
+        margin-left: 0px !important;
+        width: 7px;
+      }
+
+      .refreshOptions {
+        background-repeat: no-repeat;
+        background-position: 3px -1184px;
+        width: 21px;
+      }
+
+      .addText {
+        background-position: 0px -4060px;
+        padding: 5px 3px 5px 24px;
+      }
+
+      .addWidget {
+        background-position: 4px -4942px;
+        padding: 5px 3px 5px 24px;
+      }
+
+      .addImage {
+        background-position: 0px -3999px;
+        padding: 5px 3px 5px 24px;
+      }
+
+      .dashDnDMoveDiv {
+        background-color: #8c97ab;
+        border: 1px solid #6b717f;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffadb6c7", endColorstr="#ff8c97ab", GradientType=0) !important;
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important;
+        cursor: drag;
+        height: 25px;
+        line-height: 25px;
+        vertical-align: middle;
+        padding-right: 10px;
+        padding-left: 10px;
+        position: absolute;
+        z-index: 10000;
+        cursor: move;
+        overflow: hidden;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -khtml-border-radius: 4px;
+        border-radius: 4px;
+        font-size: var(--smallfont);
+        color: #ffffff;
+        white-space: nowrap;
+      }
+
+      .moveDivIco {
+        height: 25px;
+        line-height: 25px;
+        vertical-align: middle;
+        width: 20px;
+        float: none;
+        clear: both;
+        float: left;
+        margin-top: 3px;
+      }
+
+      .dashDivBody {
+        width: 100%;
+        overflow: hidden;
+        font-size: var(--mediumfont);
+        color: #000;
+      }
+
+      .ly-node .dashDivBody {
+        height: 100%;
+      }
+
+      .noBorderTop {
+        border-top: 0px;
+      }
+
+      #ZDBDVResizeDiv {
+        position: absolute;
+        cursor: n-resize;
+        height: 10px;
+        z-index: 95;
+      }
+
+      #ZDBDHResizeDiv {
+        position: absolute;
+        cursor: e-resize;
+        width: 10px;
+        z-index: 95;
+      }
+
+      .resizePattern {
+        fill: #46adf8;
+      }
+
+      #ZDBDashInstruction {
+        background-color: rgba(248, 248, 248, 0.6);
+        border: 1px solid #dddddd;
+        border-radius: 10px;
+        margin: auto;
+        width: 600px;
+        margin-top: 20px;
+      }
+
+      #ZDBDashInstruction h4 {
+        color: #333333;
+        line-height: 20px;
+        margin: 10px 0;
+        text-rendering: optimizelegibility;
+        font-size: var(--font18);
+        margin-left: 10px;
+      }
+
+      .ZDBDashboardPanel .navDisplayName {
+        float: none !important;
+      }
+
+      .table-main {
+        display: table;
+        table-layout: fixed;
+      }
+
+      .table-row {
+        display: table-row;
+      }
+
+      .table-cell {
+        display: table-cell;
+        vertical-align: top;
+        width: 50%;
+      }
+
+      .table-main,
+      .table-row,
+      .table-cell,
+      .multiColEdit,
+      .dashColDiv,
+      .dashRowDivEdit,
+      .ZDBDashboardEditorEl,
+      .zdbdviewmode,
+      .zdbdeditmode {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+      }
+
+      .ZDBDashboardEditorEl {
+        position: relative;
+      }
+
+      .multiColEdit,
+      .dashColDiv,
+      .table-cell {
+        display: table-cell;
+        vertical-align: top;
+        width: 50%;
+        padding: 0.66%;
+        empty-cells: show;
+        padding-bottom: 0px;
+      }
+
+      .ZDBDashboardEditorEl {
+        height: 100%;
+      }
+
+      .zdbdviewmode .dashColDiv,
+      .zdbdviewmode .table-cell,
+      .zdbdviewmode .multiColEdit {
+        padding-bottom: 0.3%;
+      }
+
+      #dashboardVMFArea .multiColEdit,
+      #dashboardVMFArea .dashColDiv,
+      #dashboardVMFArea .table-cell {
+        border: 0 none;
+      }
+
+      .box {
+        height: 100px;
+        background: lightblue;
+        width: 300px;
+        margin: 5px;
+        vertical-align: top;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+      }
+
+      .dashChildViewDeleted {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: auto;
+        transform: translateY(-50%) translateX(-50%);
+        -ms-transform: translateY(-50%) translateX(-50%);
+        text-align: center;
+      }
+
+      .dashChildViewDeletedImg {
+        height: 40px;
+        width: 40px;
+        background-position: -161px -1136px;
+        margin: auto;
+      }
+
+      .dashChildViewDeletedText {
+        padding-top: 8px;
+        font-size: var(--largefont);
+        text-align: center;
+        color: #999;
+      }
+
+      .ZDBDSElem .opr1LABEL,
+      .ZDBDSElem .opr2LABEL,
+      .ZDBDSElem .opr3LABEL,
+      .ZDBDSElem .LEGENDLABEL {
+        white-space: nowrap;
+      }
+
+      .dashChild[desc="false"][showtitle="false"] .dashviewoptions.pivot {
+        z-index: 6;
+      }
+
+      .dashChild[desc="false"][showtitle="false"] .dashviewoptions.table {
+        z-index: 6;
+      }
+
+      .dashChild[desc="false"][showtitle="false"] .dashviewoptions.report {
+        z-index: 6;
+      }
+
+      .dashChild[desc="false"][showtitle="false"] .dashviewoptions.summaryview {
+        z-index: 6;
+      }
+
+      .dashChild[desc="false"][showtitle="false"] .dashviewoptions.querytable {
+        z-index: 6;
+      }
+
+      div[viewtype="WIDGET"] .zdbLoading {
+        top: calc(50% - 50px);
+        margin-left: -70px;
+        left: calc(50% + 12px);
+      }
+
+      .dashChildTableSearchBox
+        .ZRSSearchField
+        input[type="search"]::-webkit-search-cancel-button {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="ZDBDThemeType2 MCType1">
+    <div class="dashboardContainer HTML">
+      <div id="dashImgCaptureEl" style="width: 1440px; margin: auto">
+        <div id="titleElem" style="text-align: center">
+          <div class="apititle" style="padding-bottom: 3px">
+            Sales Analysis Dashboard
+          </div>
+        </div>
+        <div id="descElem" style="text-align: center; padding: 0 15%">
+          <div class="apidesc" style="padding-bottom: 3px">
+            A complete analysis on Sales
+          </div>
+        </div>
+        <div class="ly-lineWrapper overFlowInitial">
+          <div
+            class="ly-wrapper"
+            style="
+              min-height: 100%;
+              width: 1414px;
+              border-width: 0px 4px;
+              left: 1px;
+            "
+          >
+            <div class="ly-holder" style="position: relative; top: 4px">
+              <div
+                class="ly-node"
+                style="left: 0px; top: 0px; width: 1414px; height: 201px"
+              >
+                <div
+                  class="ly-container"
+                  style="height: 100%; padding-top: 0px; visibility: visible"
+                >
+                  <div
+                    class="ZDBDSElemPar"
+                    eltype="HTML"
+                    viewtype="text"
+                    style="height: 100%; overflow: hidden"
+                  >
+                    <div>
+                      <div>
+                        <div style="padding-bottom: 15px; padding-top: 15px">
+                          <div style="text-align: Left">
+                            <span
+                              ><svg class="autoGenDashIcon">
+                                <use
+                                  xlink:href="#ZR-dashboardTitleicon"
+                                ></use></svg></span
+                            ><span
+                              style="
+                                font-size: 17pt;
+                                font-weight: bold;
+                                font-family: Arial;
+                              "
+                              >Sales Analysis Dashboard</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 0px; top: 201px; width: 354px; height: 144px"
+              >
+                <div class="ly-container zr-widgetChild">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="0"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="DEF"
+                    tlcolumnmapping=""
+                    viewtype="WIDGET"
+                  >
+                    <div
+                      class="zd-parDiv dashChildPar ZDBDWidgetRadius"
+                      elname="dlgBody"
+                      style="height: 100%"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 100%; background-color: rgb(0, 202, 174)"
+                      >
+                        <div
+                          class="ZDBDSElem"
+                          elname="ZDBDSElem"
+                          style="height: 100%; text-align: center"
+                        >
+                          <div
+                            elname="widgetBgEl"
+                            style="
+                              background-color: rgb(0, 202, 174);
+                              padding: 5px;
+                              height: 124px;
+                            "
+                            cardalignment="center"
+                          >
+                            <div
+                              elname="widgetHolder"
+                              class="widgetholder value"
+                              style="
+                                position: relative;
+                                transform-origin: 0px 0px 0px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                              "
+                            >
+                              <div
+                                elname="widgetLabel"
+                                class="opr1LABEL"
+                                style="
+                                  font-family: Lato;
+                                  font-size: 15px;
+                                  fontsize: 15;
+                                  font-weight: bold;
+                                  font-style: bold;
+                                  text-align: center;
+                                  color: #ffffff;
+                                "
+                              >
+                                Total Sales in 2024
+                              </div>
+                              <div class="kpiholder">
+                                <div
+                                  elname="widgetLabel"
+                                  class="opr1OPERATION"
+                                  style="
+                                    font-family: Lato;
+                                    font-size: 40px;
+                                    fontsize: 40;
+                                    font-weight: bold;
+                                    font-style: bold;
+                                    text-align: center;
+                                    color: #ffffff;
+                                  "
+                                >
+                                  $2.62L
+                                </div>
+                                <div
+                                  elname="widgetLabel"
+                                  class="kpiNEGATIVE"
+                                  style="font-size: 30px"
+                                >
+                                  ↓
+                                </div>
+                              </div>
+                              <div
+                                elname="widgetLabel"
+                                class="opr2LABEL"
+                                style="
+                                  font-family: Lato;
+                                  color: #ffffff;
+                                  text-align: center;
+                                  font-size: 12px;
+                                  font-style: normal;
+                                  fontsize: 12;
+                                "
+                              >
+                                2023: $7.08L
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 354px; top: 201px; width: 353px; height: 144px"
+              >
+                <div class="ly-container zr-widgetChild">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="1"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="DEF"
+                    tlcolumnmapping=""
+                    viewtype="WIDGET"
+                  >
+                    <div
+                      class="zd-parDiv dashChildPar ZDBDWidgetRadius"
+                      elname="dlgBody"
+                      style="height: 100%"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="
+                          height: 100%;
+                          background-color: rgb(40, 138, 225);
+                        "
+                      >
+                        <div
+                          class="ZDBDSElem"
+                          elname="ZDBDSElem"
+                          style="height: 100%; text-align: center"
+                        >
+                          <div
+                            elname="widgetBgEl"
+                            style="
+                              background-color: rgb(40, 138, 225);
+                              padding: 5px;
+                              height: 124px;
+                            "
+                            cardalignment="center"
+                          >
+                            <div
+                              elname="widgetHolder"
+                              class="widgetholder value"
+                              style="
+                                position: relative;
+                                transform-origin: 0px 0px 0px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                              "
+                            >
+                              <div
+                                elname="widgetLabel"
+                                class="opr1LABEL"
+                                style="
+                                  font-family: Lato;
+                                  font-size: 15px;
+                                  fontsize: 15;
+                                  font-weight: bold;
+                                  font-style: bold;
+                                  text-align: center;
+                                  color: #ffffff;
+                                "
+                              >
+                                % Difference from previous year
+                              </div>
+                              <div class="kpiholder">
+                                <div
+                                  elname="widgetLabel"
+                                  class="opr1OPERATION"
+                                  style="
+                                    font-family: Lato;
+                                    font-size: 40px;
+                                    fontsize: 40;
+                                    font-weight: bold;
+                                    font-style: bold;
+                                    text-align: center;
+                                    color: #ffffff;
+                                  "
+                                >
+                                  62.91%
+                                </div>
+                                <div
+                                  elname="widgetLabel"
+                                  class="kpiNEGATIVE"
+                                  style="font-size: 30px"
+                                >
+                                  ↓
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 707px; top: 201px; width: 353px; height: 144px"
+              >
+                <div class="ly-container zr-widgetChild">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="2"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="DEF"
+                    tlcolumnmapping=""
+                    viewtype="WIDGET"
+                  >
+                    <div
+                      class="zd-parDiv dashChildPar ZDBDWidgetRadius"
+                      elname="dlgBody"
+                      style="height: 100%"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="
+                          height: 100%;
+                          background-color: rgb(232, 77, 109);
+                        "
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <div
+                            elname="widgetBgEl"
+                            style="background-color: #e84d6d; padding: 5px"
+                          >
+                            <div class="widgetholder widgetChart">
+                              <div
+                                elname="widgetLabel"
+                                class="LEGENDLABEL"
+                                style="
+                                  font-family: Lato;
+                                  font-size: 15px;
+                                  fontsize: 15;
+                                  font-weight: bold;
+                                  font-style: bold;
+                                  text-align: center;
+                                  color: #ffffff;
+                                "
+                              >
+                                Average of Sales
+                              </div>
+                              <img
+                                src="Image_widget4_reports10879424155362048040.png"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 1060px; top: 201px; width: 354px; height: 144px"
+              >
+                <div class="ly-container zr-widgetChild">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="3"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="DEF"
+                    tlcolumnmapping=""
+                    viewtype="WIDGET"
+                  >
+                    <div
+                      class="zd-parDiv dashChildPar ZDBDWidgetRadius"
+                      elname="dlgBody"
+                      style="height: 100%"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="
+                          height: 100%;
+                          background-color: rgb(249, 136, 44);
+                        "
+                      >
+                        <div
+                          class="ZDBDSElem"
+                          elname="ZDBDSElem"
+                          style="height: 100%; text-align: center"
+                        >
+                          <div
+                            elname="widgetBgEl"
+                            style="
+                              background-color: rgb(249, 136, 44);
+                              padding: 5px;
+                              height: 124px;
+                            "
+                            cardalignment="center"
+                          >
+                            <div
+                              elname="widgetHolder"
+                              class="widgetholder value"
+                              style="
+                                position: relative;
+                                transform-origin: 0px 0px 0px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                              "
+                            >
+                              <div
+                                elname="widgetLabel"
+                                class="opr1LABEL"
+                                style="
+                                  font-family: Lato;
+                                  font-size: 15px;
+                                  fontsize: 15;
+                                  font-weight: bold;
+                                  font-style: bold;
+                                  text-align: center;
+                                  color: #ffffff;
+                                "
+                              >
+                                Region with MAX Sales(East)
+                              </div>
+                              <div
+                                elname="widgetLabel"
+                                class="opr1OPERATION"
+                                style="
+                                  font-family: Lato;
+                                  font-size: 40px;
+                                  fontsize: 40;
+                                  font-weight: bold;
+                                  font-style: bold;
+                                  text-align: center;
+                                  color: #ffffff;
+                                "
+                              >
+                                $11.98L
+                              </div>
+                              <div
+                                elname="widgetLabel"
+                                class="opr2LABEL"
+                                style="
+                                  font-family: Lato;
+                                  color: #ffffff;
+                                  text-align: center;
+                                  font-size: 12px;
+                                  font-style: normal;
+                                  fontsize: 12;
+                                "
+                              >
+                                Region wise average Sales: $8.67L
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 0px; top: 345px; width: 530px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="4"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">Region-wise Sales</div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_290494600000002064714339792031088755933.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 530px; top: 345px; width: 884px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="0"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">Distribution of Sales</div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_29049460000000206193614756807862764425.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 0px; top: 705px; width: 707px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="1"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">
+                          Product Category-wise Sales
+                        </div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_29049460000000206513623155083016016569.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 707px; top: 705px; width: 707px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="2"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">
+                          Product Category-wise Sales by Region
+                        </div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_290494600000002066117838612687939170543.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 0px; top: 1065px; width: 707px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="3"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">Product-wise Sales</div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_29049460000000206557844644683214096374.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 707px; top: 1065px; width: 707px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="4"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">Sales Across Years</div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_290494600000002062717842942668795042276.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 0px; top: 1425px; width: 707px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="0"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">
+                          Year to Date(YTD) Sales by each Year
+                        </div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_29049460000000206336865832752465756470.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 707px; top: 1425px; width: 707px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="1"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">
+                          Sales Across Years by Product Category
+                        </div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_290494600000002063713324860537504535146.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 0px; top: 1785px; width: 707px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="2"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">
+                          Sales Across Years by Region
+                        </div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_290494600000002064215619102639323179299.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 707px; top: 1785px; width: 707px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="3"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">
+                          Top 10 Customer Name by Sales
+                        </div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_29049460000000206234260101101286934705.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 0px; top: 2145px; width: 1414px; height: 360px"
+              >
+                <div class="ly-container">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="4"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">
+                          Date-wise Sales by Region
+                        </div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div class="ZDBDSElem" elname="ZDBDSElem">
+                          <img
+                            src="Image_29049460000000206661160728704852749923.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ly-node"
+                style="left: 0px; top: 2505px; width: 1414px; height: 360px"
+              >
+                <div class="ly-container zr-ScrollableChild">
+                  <div
+                    class="zd-dashChild dashChild ZDBDSElemPar"
+                    elname="dashChildEl"
+                    thememulticolortype="0"
+                    showtitle="true"
+                    desc="false"
+                    showvmfilter="false"
+                    sbox="false"
+                    applydashvmfilter="true"
+                    useasfilter="true"
+                    enablealluserfilters="false"
+                    collapselegend="false"
+                    lp="BOTTOMCENTER"
+                    tlcolumnmapping=""
+                  >
+                    <div class="ZDBDSElemTitleDesc" elname="titleDescArea">
+                      <div
+                        class="dashChildTitleArea titleDescScale"
+                        style="height: auto"
+                      >
+                        <div class="ZDBDSElemTitle">
+                          Sales distribution across Years and Product Category
+                          by Region
+                        </div>
+                        <div class="ZDBDSElemDesc"></div>
+                      </div>
+                    </div>
+                    <div
+                      class="zd-parDiv dashChildPar"
+                      elname="dlgBody"
+                      style="height: 289px"
+                    >
+                      <div
+                        class="dashChildContent"
+                        elname="dlgContent"
+                        style="height: 289px"
+                      >
+                        <div
+                          class="ZDBDSElem"
+                          elname="ZDBDSElem"
+                          style="
+                            padding: 5px;
+                            max-height: 289px;
+                            max-width: 1404px;
+                          "
+                        >
+                          <table
+                            elname="scrollableTable"
+                            width="100%"
+                            align="center"
+                            cellpadding="0"
+                            cellspacing="0"
+                            class="PivotSheet t4"
+                          >
+                            <tr>
+                              <td>
+                                <table
+                                  class="mainTable"
+                                  elname="mainTable"
+                                  border="0"
+                                  cellspacing="0"
+                                  cellpadding="3"
+                                  width="100%"
+                                  class="gTable"
+                                  style="
+                                    empty-cells: show;
+                                    font-family: Lato, Arial, Verdana,
+                                      sans-serif;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr class="chRow" height="27">
+                                      <td class="colHeadL">
+                                        <strong>Year of Date</strong>
+                                      </td>
+                                      <td class="colHeadL">
+                                        <strong>Product Category</strong>
+                                      </td>
+                                      <td class="colHeadR">
+                                        <strong>Central</strong>
+                                      </td>
+                                      <td class="colHeadR">
+                                        <strong>East</strong>
+                                      </td>
+                                      <td class="colHeadR">
+                                        <strong>West</strong>
+                                      </td>
+                                      <td class="colHeadR">
+                                        <strong>Total Sales</strong>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">2020</td>
+                                      <td align="Left" class="dL">Furniture</td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004755"
+                                      >
+                                        0.00%
+                                      </td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004753"
+                                      >
+                                        98.12%
+                                      </td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004755"
+                                      >
+                                        1.88%
+                                      </td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">&nbsp;</td>
+                                      <td align="Left" class="dL">Grocery</td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004755"
+                                      >
+                                        6.96%
+                                      </td>
+                                      <td align="Right" class="dR">63.46%</td>
+                                      <td align="Right" class="dR">29.58%</td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL bottomLine">
+                                        &nbsp;
+                                      </td>
+                                      <td align="Left" class="dL bottomLine">
+                                        Stationery
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        20.38%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        33.57%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        46.05%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        100.00%
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="sL">2020</td>
+                                      <td align="Left" class="sL">&nbsp;</td>
+                                      <td align="Right" class="sR">9.39%</td>
+                                      <td align="Right" class="sR">59.42%</td>
+                                      <td align="Right" class="sR">31.19%</td>
+                                      <td align="Right" class="sR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">2021</td>
+                                      <td align="Left" class="dL">Furniture</td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004755"
+                                      >
+                                        3.48%
+                                      </td>
+                                      <td align="Right" class="dR">59.10%</td>
+                                      <td align="Right" class="dR">37.42%</td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">&nbsp;</td>
+                                      <td align="Left" class="dL">Grocery</td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004755"
+                                      >
+                                        16.12%
+                                      </td>
+                                      <td align="Right" class="dR">48.61%</td>
+                                      <td align="Right" class="dR">35.27%</td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL bottomLine">
+                                        &nbsp;
+                                      </td>
+                                      <td align="Left" class="dL bottomLine">
+                                        Stationery
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        28.65%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        52.30%
+                                      </td>
+                                      <td
+                                        align="Right"
+                                        class="dR bottomLine FID2904946000000004755"
+                                      >
+                                        19.05%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        100.00%
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="sL">2021</td>
+                                      <td align="Left" class="sL">&nbsp;</td>
+                                      <td align="Right" class="sR">16.16%</td>
+                                      <td align="Right" class="sR">50.86%</td>
+                                      <td align="Right" class="sR">32.98%</td>
+                                      <td align="Right" class="sR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">2022</td>
+                                      <td align="Left" class="dL">Furniture</td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004755"
+                                      >
+                                        13.64%
+                                      </td>
+                                      <td align="Right" class="dR">22.14%</td>
+                                      <td align="Right" class="dR">64.22%</td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">&nbsp;</td>
+                                      <td align="Left" class="dL">Grocery</td>
+                                      <td align="Right" class="dR">22.46%</td>
+                                      <td align="Right" class="dR">41.03%</td>
+                                      <td align="Right" class="dR">36.51%</td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL bottomLine">
+                                        &nbsp;
+                                      </td>
+                                      <td align="Left" class="dL bottomLine">
+                                        Stationery
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        27.91%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        46.42%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        25.67%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        100.00%
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="sL">2022</td>
+                                      <td align="Left" class="sL">&nbsp;</td>
+                                      <td align="Right" class="sR">22.60%</td>
+                                      <td align="Right" class="sR">40.32%</td>
+                                      <td align="Right" class="sR">37.09%</td>
+                                      <td align="Right" class="sR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">2023</td>
+                                      <td align="Left" class="dL">Furniture</td>
+                                      <td align="Right" class="dR">37.61%</td>
+                                      <td align="Right" class="dR">49.12%</td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004755"
+                                      >
+                                        13.27%
+                                      </td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">&nbsp;</td>
+                                      <td align="Left" class="dL">Grocery</td>
+                                      <td align="Right" class="dR">44.00%</td>
+                                      <td align="Right" class="dR">34.62%</td>
+                                      <td align="Right" class="dR">21.38%</td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL bottomLine">
+                                        &nbsp;
+                                      </td>
+                                      <td align="Left" class="dL bottomLine">
+                                        Stationery
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        20.62%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        40.27%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        39.11%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        100.00%
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="sL">2023</td>
+                                      <td align="Left" class="sL">&nbsp;</td>
+                                      <td align="Right" class="sR">37.72%</td>
+                                      <td align="Right" class="sR">37.24%</td>
+                                      <td align="Right" class="sR">25.04%</td>
+                                      <td align="Right" class="sR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">2024</td>
+                                      <td align="Left" class="dL">Furniture</td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004755"
+                                      >
+                                        5.49%
+                                      </td>
+                                      <td align="Right" class="dR">49.13%</td>
+                                      <td align="Right" class="dR">45.38%</td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL">&nbsp;</td>
+                                      <td align="Left" class="dL">Grocery</td>
+                                      <td align="Right" class="dR">32.85%</td>
+                                      <td align="Right" class="dR">52.48%</td>
+                                      <td
+                                        align="Right"
+                                        class="dR FID2904946000000004755"
+                                      >
+                                        14.68%
+                                      </td>
+                                      <td align="Right" class="dR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="dL bottomLine">
+                                        &nbsp;
+                                      </td>
+                                      <td align="Left" class="dL bottomLine">
+                                        Stationery
+                                      </td>
+                                      <td
+                                        align="Right"
+                                        class="dR bottomLine FID2904946000000004755"
+                                      >
+                                        15.21%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        65.40%
+                                      </td>
+                                      <td
+                                        align="Right"
+                                        class="dR bottomLine FID2904946000000004755"
+                                      >
+                                        19.38%
+                                      </td>
+                                      <td align="Right" class="dR bottomLine">
+                                        100.00%
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="sL">2024</td>
+                                      <td align="Left" class="sL">&nbsp;</td>
+                                      <td align="Right" class="sR">26.50%</td>
+                                      <td align="Right" class="sR">54.87%</td>
+                                      <td align="Right" class="sR">18.63%</td>
+                                      <td align="Right" class="sR">100.00%</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="Left" class="tL">
+                                        Grand&nbsp;Total:
+                                      </td>
+                                      <td align="Left" class="tL padRight">
+                                        &nbsp;
+                                      </td>
+                                      <td align="Right" class="tR">23.77%</td>
+                                      <td align="Right" class="tR">46.07%</td>
+                                      <td align="Right" class="tR padRight">
+                                        30.16%
+                                      </td>
+                                      <td align="Right" class="tR padRight">
+                                        100.00%
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div></div>
+            <style>
+              .ly-node,
+              .dashEditMultiSelect:before {
+                border-width: 4px;
+              }
+            </style>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      .FID2904946000000004755 {
+        color: #fe6567 !important;
+      }
+      .FID2904946000000004753 {
+        color: #49a627 !important;
+      }
+    </style>
+  </body>
+</html>
